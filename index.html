@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade de Ciências - 4º Bimestre</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .school-name {
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .student-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .info-field {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .info-field label {
+            margin-right: 5px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        
+        .info-field input, .info-field select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .name-field {
+            width: 100%;
+        }
+        
+        .number-field, .class-field, .date-field {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .activity-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+            margin: 20px 0;
+        }
+        
+        .question {
+            background-color: #e6f7ff;
+            margin: 5mm 20px; /* Reduzido de 20px para 5mm */
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .question-image {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .options {
+            margin-top: 15px;
+        }
+        
+        .option {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f0f8ff;
+        }
+        
+        .option.selected {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        
+        .option-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 5px;
+            border-radius: 3px;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        #submitBtn {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        #submitBtn:hover {
+            background-color: #218838;
+        }
+        
+        #clearBtn {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        #clearBtn:hover {
+            background-color: #c82333;
+        }
+        
+        .spacer {
+            height: 5mm; /* Reduzido de 2cm para 5mm */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="school-name">E.E. PROFª WANDA MASCAGNI DE SÁ</div>
+            <div class="student-info">
+                <div class="info-field name-field">
+                    <label for="studentName">NOME:</label>
+                    <select id="studentName" style="width: 100%;">
+                        <option value="">Selecione seu nome</option>
+                        <!-- Alunos do 7º Ano A -->
+                        <option value="1" data-number="1" data-class="7º Ano A">ALICE CARDOSO DE ALCANTARA</option>
+                        <option value="2" data-number="2" data-class="7º Ano A">ANA CAROLINA GONCALVES NASCIMENTO DE LIMA</option>
+                        <option value="3" data-number="3" data-class="7º Ano A">ANA LUIZA VALENCA PAIVA</option>
+                        <option value="5" data-number="5" data-class="7º Ano A">CARLOS EDUARDO MENEZES MACHADO</option>
+                        <option value="7" data-number="7" data-class="7º Ano A">EVANDRO CUTOLO TEIXEIRA</option>
+                        <option value="8" data-number="8" data-class="7º Ano A">GABRIELA SANTOS COSTA</option>
+                        <option value="9" data-number="9" data-class="7º Ano A">GLEYSSON PEREIRA DOS SANTOS</option>
+                        <option value="10" data-number="10" data-class="7º Ano A">GUILHERME CARMO RODRIGUES</option>
+                        <option value="11" data-number="11" data-class="7º Ano A">GUSTAVO HENRIQUE DA SILVA</option>
+                        <option value="12" data-number="12" data-class="7º Ano A">KELVIN DUARTE GONCALVES</option>
+                        <option value="13" data-number="13" data-class="7º Ano A">KEVIN LELIS DA SILVA SIMAO</option>
+                        <option value="14" data-number="14" data-class="7º Ano A">LAURA VITORIA ROCHA</option>
+                        <option value="17" data-number="17" data-class="7º Ano A">LUCAS EDUARDO DA SILVA SANTANA</option>
+                        <option value="21" data-number="21" data-class="7º Ano A">MIGUEL LIMA DE MESQUITA</option>
+                        <option value="23" data-number="23" data-class="7º Ano A">NICOLAS ROCHA SILVA</option>
+                        <option value="24" data-number="24" data-class="7º Ano A">PAOLLA MICHELLINE DOS SANTOS MARQUES</option>
+                        <option value="25" data-number="25" data-class="7º Ano A">PEDRO HENRIQUE CORREA DE BRITO</option>
+                        <option value="27" data-number="27" data-class="7º Ano A">RAFAEL CORREIA MENDES</option>
+                        <option value="28" data-number="28" data-class="7º Ano A">RYAN GABRIEL PEREIRA DE SOUSA</option>
+                        <option value="29" data-number="29" data-class="7º Ano A">SAMUEL ALVES DA COSTA</option>
+                        <option value="30" data-number="30" data-class="7º Ano A">SOFIA AZEREDO CUBAS</option>
+                        <option value="31" data-number="31" data-class="7º Ano A">SOPHIA LACERDA ANDRADE</option>
+                        <option value="33" data-number="33" data-class="7º Ano A">THAYLLA DUANNY VENANCIO SCAQUITO</option>
+                        <option value="34" data-number="34" data-class="7º Ano A">THAYS RODRIGUES DA SILVA</option>
+                        <option value="35" data-number="35" data-class="7º Ano A">VICTOR HENRIQUE BENVINDO</option>
+                        <option value="36" data-number="36" data-class="7º Ano A">FELIPE GONZALES PATRICIO ALVES</option>
+                        <option value="37" data-number="37" data-class="7º Ano A">ISAAC FERNANDES DE ANDRADE</option>
+                        <option value="39" data-number="39" data-class="7º Ano A">MIKAELLEN VIEIRA FERNANDES DOS SANTOS</option>
+                        <option value="40" data-number="40" data-class="7º Ano A">BRYAN DINIZ SILVA</option>
+                        <option value="41" data-number="41" data-class="7º Ano A">RAPHAEL MATHIAS NUNES MIRANDA</option>
+                        <option value="42" data-number="42" data-class="7º Ano A">LEONARDO DE AVELAR CARVALHO</option>
+                        <option value="44" data-number="44" data-class="7º Ano A">LETICIA CUSTODIO LIMA</option>
+                        
+                        <!-- Alunos do 7º Ano B -->
+                        <option value="2b" data-number="2" data-class="7º Ano B">ANA CLARA GONCALVES TORRES LOYOLA</option>
+                        <option value="3b" data-number="3" data-class="7º Ano B">ANNA BEATRIZ SANTIAGO DA SILVA</option>
+                        <option value="6b" data-number="6" data-class="7º Ano B">ELIAS SILVA DE LIMA</option>
+                        <option value="7b" data-number="7" data-class="7º Ano B">EVERTON HENRIQUE CARMO RODRIGUES</option>
+                        <option value="9b" data-number="9" data-class="7º Ano B">GABRIELA VITORIA SEVERA LINS</option>
+                        <option value="14b" data-number="14" data-class="7º Ano B">LUAN VENITES BALBINO</option>
+                        <option value="17b" data-number="17" data-class="7º Ano B">MARIA EDUARDA FELIX DA SILVA</option>
+                        <option value="18b" data-number="18" data-class="7º Ano B">MONIQUE RIJO COSTA</option>
+                        <option value="19b" data-number="19" data-class="7º Ano B">MUNIQUE CRISTINA LUCAS</option>
+                        <option value="20b" data-number="20" data-class="7º Ano B">NICOLAS PENTEADO</option>
+                        <option value="23b" data-number="23" data-class="7º Ano B">PAULO CELSO DA COSTA JUNIOR</option>
+                        <option value="24b" data-number="24" data-class="7º Ano B">PEDRO HENRIQUE CARLOS LIMA</option>
+                        <option value="25b" data-number="25" data-class="7º Ano B">PEDRO HENRIQUE MORAIS AMORIM</option>
+                        <option value="27b" data-number="27" data-class="7º Ano B">PIETRO RODRIGUES MIRANDA</option>
+                        <option value="28b" data-number="28" data-class="7º Ano B">RAPHAELLY APARECIDA MARINHO DE OLIVEIRA</option>
+                        <option value="29b" data-number="29" data-class="7º Ano B">RENAN LEANDRO RODRIGUES VICENTE</option>
+                        <option value="33b" data-number="33" data-class="7º Ano B">WENDELL RAFAEL DE JESUS LESSA</option>
+                        <option value="34b" data-number="34" data-class="7º Ano B">WILHAN KENJI ANTONIO</option>
+                        <option value="40b" data-number="40" data-class="7º Ano B">JENNYFER VITORIA BASILIO GOMES</option>
+                        <option value="41b" data-number="41" data-class="7º Ano B">THAYNA SEABRA DE OLIVEIRA DO NASCIMENTO</option>
+                        <option value="46b" data-number="46" data-class="7º Ano B">SOPHIA MENEZES DE ARAUJO</option>
+                        <option value="47b" data-number="47" data-class="7º Ano B">VITORIA MENEZES BRANDAO</option>
+                        <option value="49b" data-number="49" data-class="7º Ano B">LORENA ALEXANDRE SANTOS DA SILVA</option>
+                        <option value="50b" data-number="50" data-class="7º Ano B">MANUELLA DE MORAES SOUZA</option>
+                        <option value="51b" data-number="51" data-class="7º Ano B">VITORIA JOLIE RODRIGUES RAPOSO</option>
+                        <option value="52b" data-number="52" data-class="7º Ano B">RAQUEL BARGAS TAVARES DOS SANTOS</option>
+                        <option value="53b" data-number="53" data-class="7º Ano B">RODOLFO RAFAEL GOLZENLEUCHTER MORENO JUNIOR</option>
+                        <option value="54b" data-number="54" data-class="7º Ano B">ANTONIO CARLOS CAMPOS NETO</option>
+                    </select>
+                </div>
+                <div class="info-field number-field">
+                    <label for="studentNumber">Nº:</label>
+                    <input type="text" id="studentNumber" readonly>
+                </div>
+                <div class="info-field class-field">
+                    <label for="studentClass">SÉRIE:</label>
+                    <input type="text" id="studentClass" readonly>
+                </div>
+                <div class="info-field date-field">
+                    <label for="activityDate">DATA:</label>
+                    <input type="date" id="activityDate">
+                </div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="activity-title">ATIVIDADE DE CIÊNCIAS (4º BIMESTRE)</div>
+        
+        <div class="question">
+            <div class="question-title">1. Durante a pandemia de COVID-19, observamos diferentes fases de disseminação do vírus. Analise o gráfico abaixo que representa a evolução de uma pandemia fictícia:</div>
+            <img src="https://via.placeholder.com/600x300?text=Gráfico+de+Simulação+de+Pandemia" alt="Gráfico de simulação de pandemia" class="question-image">
+            <div class="options">
+                <div class="option" data-value="A">
+                    A) O gráfico mostra que o número de infectados permaneceu constante durante toda a pandemia, indicando medidas de controle eficazes desde o início.
+                </div>
+                <div class="option" data-value="B">
+                    B) Observa-se um pico de infectados seguido por uma diminuição gradual, sugerindo que medidas de contenção foram implementadas com sucesso após o pico inicial.
+                </div>
+                <div class="option" data-value="C">
+                    C) O número de mortos é sempre superior ao número de infectados, o que indica uma taxa de letalidade extremamente alta para essa doença.
+                </div>
+                <div class="option" data-value="D">
+                    D) A linha dos recuperados mostra que todas as pessoas infectadas se recuperaram rapidamente, sem necessidade de intervenção médica especializada.
+                </div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="question">
+            <div class="question-title">2. As bactérias podem desenvolver resistência aos antibióticos através de diferentes mecanismos. Observe a imagem que representa o processo de seleção de bactérias resistentes:</div>
+            <img src="https://via.placeholder.com/600x300?text=Seleção+de+Bactérias+Resistentes" alt="Seleção de bactérias resistentes" class="question-image">
+            <div class="options">
+                <div class="option" data-value="A">
+                    A) A resistência bacteriana ocorre apenas quando os antibióticos são usados em doses muito altas, nunca em tratamentos com doses normais.
+                </div>
+                <div class="option" data-value="B">
+                    B) As bactérias desenvolvem resistência através de mutações genéticas que são selecionadas pelo uso inadequado de antibióticos, permitindo que apenas as resistentes sobrevivem e se multipliquem.
+                </div>
+                <div class="option" data-value="C">
+                    C) A imagem mostra que todas as bactérias são igualmente sensíveis aos antibióticos, não havendo variação na resistência entre diferentes linhagens.
+                </div>
+                <div class="option" data-value="D">
+                    D) O desenvolvimento de resistência ocorre apenas em ambientes hospitalares, nunca em comunidades ou no meio ambiente.
+                </div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="question">
+            <div class="question-title">3. O sistema imunológico humano possui diferentes linhas de defesa contra patógenos. Analise a imagem que representa a fagocitose por um glóbulo branco:</div>
+            <img src="https://via.placeholder.com/600x300?text=Fagocitose+por+Glóbulo+Branco" alt="Fagocitose por glóbulo branco" class="question-image">
+            <div class="options">
+                <div class="option" data-value="A">
+                    A) A fagocitose é um processo exclusivo da imunidade adaptativa, que só ocorre após a exposição prévia a um patógeno específico.
+                </div>
+                <div class="option" data-value="B">
+                    B) Este processo faz parte da imunidade inata, onde células como macrófagos e neutrófilos englobam e destroem microrganismos invasores de forma não específica.
+                </div>
+                <div class="option" data-value="C">
+                    C) A imagem mostra a produção de anticorpos por linfócitos B, que é o principal mecanismo de defesa contra todos os tipos de infecções.
+                </div>
+                <div class="option" data-value="D">
+                    D) A fagocitose é um processo que só ocorre em resposta a infecções virais, sendo ineficaz contra bactérias e fungos.
+                </div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="question">
+            <div class="question-title">4. As vacinas são uma das intervenções de saúde pública mais eficazes na prevenção de doenças. Observe a imagem que representa o conceito de imunidade de rebanho:</div>
+            <img src="https://via.placeholder.com/600x300?text=Imunidade+de+Rebanho" alt="Imunidade de rebanho" class="question-image">
+            <div class="options">
+                <div class="option" data-value="A">
+                    A) A imunidade de rebanho ocorre quando apenas 10% da população está vacinada, protegendo assim toda a comunidade contra doenças infecciosas.
+                </div>
+                <div class="option" data-value="B">
+                    B) Este conceito se baseia na ideia de que quando uma alta porcentagem da população está imune a uma doença, a transmissão é dificultada, protegendo também indivíduos não vacinados.
+                </div>
+                <div class="option" data-value="C">
+                    C) A imagem mostra que a vacinação individual é suficiente para proteger toda a população, sem necessidade de altas coberturas vacinais.
+                </div>
+                <div class="option" data-value="D">
+                    D) A imunidade de rebanho só é eficaz contra doenças bacterianas, não tendo qualquer efeito sobre doenças virais como COVID-19 ou sarampo.
+                </div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="question">
+            <div class="question-title">5. A tuberculose é uma doença infecciosa causada pela bactéria Mycobacterium tuberculosis. Observe a imagem que mostra os principais sintomas da tuberculose:</div>
+            <img src="https://via.placeholder.com/600x300?text=Sintomas+da+Tuberculose" alt="Sintomas da tuberculose" class="question-image">
+            <div class="options">
+                <div class="option" data-value="A">
+                    A) A tuberculose é uma doença que afeta apenas o sistema digestivo, causando principalmente diarreia e dor abdominal.
+                </div>
+                <div class="option" data-value="B">
+                    B) Os principais sintomas incluem tosse persistente por mais de três semanas, febre vespertina, sudorese noturna e emagrecimento.
+                </div>
+                <div class="option" data-value="C">
+                    C) A imagem mostra que a tuberculose é uma doença que não apresenta sintomas específicos, sendo impossível diagnosticá-la clinicamente.
+                </div>
+                <div class="option" data-value="D">
+                    D) A tuberculose é uma doença autoimune que não responde a tratamentos com antibióticos, exigindo apenas repouso para recuperação.
+                </div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="question">
+            <div class="question-title">6. O sistema linfático desempenha um papel fundamental na defesa do organismo. Analise a imagem que mostra a anatomia dos principais órgãos linfoides:</div>
+            <img src="https://via.placeholder.com/600x300?text=Sistema+Linfático" alt="Sistema linfático" class="question-image">
+            <div class="options">
+                <div class="option" data-value="A">
+                    A) O sistema linfático é responsável apenas pelo transporte de nutrientes, não tendo qualquer relação com a defesa imunológica do organismo.
+                </div>
+                <div class="option" data-value="B">
+                    B) Órgãos como baço, timo e linfonodos produzem e abrigam células do sistema imune, sendo essenciais para a resposta imunológica contra patógenos.
+                </div>
+                <div class="option" data-value="C">
+                    C) A imagem mostra que o sistema linfático é independente do sistema circulatório, não havendo comunicação entre os dois sistemas.
+                </div>
+                <div class="option" data-value="D">
+                    D) Os órgãos linfoides são responsáveis apenas pela produção de hemácias, não participando da defesa contra infecções.
+                </div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="question">
+            <div class="question-title">7. As ISTs (Infecções Sexualmente Transmissíveis) como gonorreia e clamídia são causadas por bactérias. Observe a imagem que representa a bactéria Neisseria gonorrhoeae:</div>
+            <img src="https://via.placeholder.com/600x300?text=Bactéria+Neisseria+gonorrhoeae" alt="Bactéria Neisseria gonorrhoeae" class="question-image">
+            <div class="options">
+                <div class="option" data-value="A">
+                    A) A gonorreia é causada por um vírus que não responde a tratamentos com antibióticos, exigindo apenas repouso para recuperação.
+                </div>
+                <div class="option" data-value="B">
+                    B) Estas ISTs são causadas por bactérias (Neisseria gonorrhoeae e Chlamydia trachomatis) que podem ser prevenidas pelo uso de preservativos e tratadas com antibióticos específicos.
+                </div>
+                <div class="option" data-value="C">
+                    C) A imagem mostra que a bactéria da gonorreia é visível a olho nu, facilitando seu diagnóstico sem necessidade de exames laboratoriais.
+                </div>
+                <div class="option" data-value="D">
+                    D) As ISTs bacterianas afetam apenas o sistema respiratório, não tendo qualquer relação com o sistema reprodutivo.
+                </div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="question">
+            <div class="question-title">8. O botulismo é uma doença bacteriana grave causada pela toxina da Clostridium botulinum. Observe a imagem que mostra os alimentos que podem estar contaminados:</div>
+            <img src="https://via.placeholder.com/600x300?text=Alimentos+Contaminados+com+Clostridium+botulinum" alt="Alimentos contaminados com Clostridium botulinum" class="question-image">
+            <div class="options">
+                <div class="option" data-value="A">
+                    A) O botulismo é uma infecção viral que se espalha pelo ar, não tendo relação com o consumo de alimentos contaminados.
+                </div>
+                <div class="option" data-value="B">
+                    B) A doença é causada pela toxina produzida pela bactéria Clostridium botulinum, que pode estar presente em alimentos enlatados ou conservas mal processadas.
+                </div>
+                <div class="option" data-value="C">
+                    C) A imagem mostra que apenas alimentos frescos e não processados podem conter a bactéria do botulismo.
+                </div>
+                <div class="option" data-value="D">
+                    D) O botulismo é uma doença contagiosa que se espalha facilmente de pessoa para pessoa, exigindo isolamento dos pacientes infectados.
+                </div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="question">
+            <div class="question-title">9. A resposta imune adaptativa envolve a produção de anticorpos específicos. Analise a imagem que representa a interação entre antígenos e anticorpos:</div>
+            <img src="https://via.placeholder.com/600x300?text=Interação+Antígeno-Anticorpo" alt="Interação antígeno-anticorpo" class="question-image">
+            <div class="options">
+                <div class="option" data-value="A">
+                    A) Os anticorpos são produzidos por macrófagos e atuam de forma não específica contra qualquer tipo de patógeno.
+                </div>
+                <div class="option" data-value="B">
+                    B) Os linfócitos B produzem anticorpos específicos que se ligam a antígenos específicos, neutralizando os patógenos e marcando-os para destruição.
+                </div>
+                <div class="option" data-value="C">
+                    C) A imagem mostra que os anticorpos são capazes de destruir diretamente as células infectadas, sem necessidade de outras células do sistema imune.
+                </div>
+                <div class="option" data-value="D">
+                    D) Os anticorpos são moléculas inespecíficas que se ligam igualmente a todos os tipos de patógenos, não havendo especificidade na resposta imune.
+                </div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="question">
+            <div class="question-title">10. A produção de vacinas envolve várias etapas rigorosas de controle de qualidade. Observe a imagem que representa o processo de fabricação de vacinas:</div>
+            <img src="https://via.placeholder.com/600x300?text=Fabricação+de+Vacinas" alt="Fabricação de vacinas" class="question-image">
+            <div class="options">
+                <div class="option" data-value="A">
+                    A) As vacinas são produzidas de forma artesanal, sem necessidade de controle de qualidade ou aprovação por agências reguladoras.
+                </div>
+                <div class="option" data-value="B">
+                    B) O processo inclui desenvolvimento do IFA (Ingrediente Farmacêutico Ativo), testes clínicos, aprovação pela Anvisa e produção em larga escala, com rigoroso controle de qualidade em todas as etapas.
+                </div>
+                <div class="option" data-value="C">
+                    C) A imagem mostra que as vacinas são produzidas a partir de sangue humano, sem qualquer processamento ou purificação.
+                </div>
+                <div class="option" data-value="D">
+                    D) As vacinas não passam por testes em animais ou humanos antes de serem disponibilizadas para a população, visando acelerar o processo de produção.
+                </div>
+            </div>
+        </div>
+        
+        <div class="spacer"></div>
+        
+        <div class="buttons">
+            <button id="submitBtn">Enviar</button>
+            <button id="clearBtn">Limpar</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Definir data atual como padrão
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById('activityDate').value = formattedDate;
+            
+            // Preencher número e série automaticamente ao selecionar nome
+            document.getElementById('studentName').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                document.getElementById('studentNumber').value = selectedOption.getAttribute('data-number') || '';
+                document.getElementById('studentClass').value = selectedOption.getAttribute('data-class') || '';
+            });
+            
+            // Selecionar opções nas questões
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remover seleção de outras opções na mesma questão
+                    const parentQuestion = this.closest('.question');
+                    parentQuestion.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Selecionar esta opção
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Botão limpar
+            document.getElementById('clearBtn').addEventListener('click', function() {
+                document.querySelectorAll('.option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+            });
+            
+            // Botão enviar
+            document.getElementById('submitBtn').addEventListener('click', function() {
+                const studentName = document.getElementById('studentName').value;
+                const studentNumber = document.getElementById('studentNumber').value;
+                const studentClass = document.getElementById('studentClass').value;
+                const activityDate = document.getElementById('activityDate').value;
+                
+                // Validar se o aluno selecionou seu nome
+                if (!studentName) {
+                    alert('Por favor, selecione seu nome na lista.');
+                    return;
+                }
+                
+                // Coletar respostas
+                const answers = [];
+                document.querySelectorAll('.question').forEach((question, index) => {
+                    const selectedOption = question.querySelector('.option.selected');
+                    answers.push(selectedOption ? selectedOption.getAttribute('data-value') : '');
+                });
+                
+                // Verificar se todas as questões foram respondidas
+                if (answers.includes('')) {
+                    alert('Por favor, responda todas as questões antes de enviar.');
+                    return;
+                }
+                
+                // Calcular pontuação (cada questão vale 1 ponto)
+                const score = answers.filter(answer => answer === 'B').length;
+                
+                // Enviar para o Google Sheets
+                submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score);
+            });
+            
+            function submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score) {
+                // URL do Google Apps Script (substitua pelo URL real do seu script)
+                const scriptURL = 'https://script.google.com/macros/s/SEU_SCRIPT_ID/exec';
+                
+                const formData = new FormData();
+                formData.append('studentName', studentName);
+                formData.append('studentNumber', studentNumber);
+                formData.append('studentClass', studentClass);
+                formData.append('activityDate', activityDate);
+                formData.append('answers', JSON.stringify(answers));
+                formData.append('score', score);
+                
+                fetch(scriptURL, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Respostas enviadas com sucesso! Sua pontuação: ' + score + '/10');
+                    } else {
+                        alert('Erro ao enviar respostas. Tente novamente.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao enviar respostas. Tente novamente.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
