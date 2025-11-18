@@ -487,11 +487,15 @@
         </div>
     </div>
 
-    <script>
+   <script>
 document.addEventListener('DOMContentLoaded', function() {
 
+    // URL do seu Web App do Google Apps Script
+    // ATENÇÃO: Certifique-se de que este URL está correto e que o Apps Script foi publicado com as permissões "Qualquer pessoa".
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypSZyTimiMGvf4E8IXRvsjTM_DGrW_7njk8kjzV0wK2V4Pdr3AGTnX9k1MdkJ_Mmo/exec";
+
     /* =====================================================
-       🟦 1) DATA ATUAL PADRÃO
+       🟦 1 ) DATA ATUAL PADRÃO
     ===================================================== */
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0];
@@ -574,37 +578,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     /* =====================================================
-       🟦 6) ENVIO PARA O GOOGLE SHEETS EM JSON
+       🟦 6) ENVIO PARA O GOOGLE SHEETS (CORREÇÃO CORS)
     ===================================================== */
     function submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score) {
 
-        const scriptURL = "https://script.google.com/macros/s/AKfycbypSZyTimiMGvf4E8IXRvsjTM_DGrW_7njk8kjzV0wK2V4Pdr3AGTnX9k1MdkJ_Mmo/exec";
+        // Cria um objeto FormData para enviar os dados como um formulário (evita CORS)
+        const formData = new FormData();
+        formData.append('studentName', studentName);
+        formData.append('studentNumber', studentNumber);
+        formData.append('studentClass', studentClass);
+        formData.append('activityDate', activityDate);
+        formData.append('score', score);
+        
+        // Adiciona as respostas individualmente (Q1, Q2, Q3...)
+        answers.forEach((answer, index) => {
+            formData.append(`Q${index + 1}`, answer);
+        });
 
-        const payload = {
-            studentName: studentName,
-            studentNumber: studentNumber,
-            studentClass: studentClass,
-            activityDate: activityDate,
-            answers: answers,
-            score: score,
-            timestamp: new Date().toISOString()
-        };
+        // Adiciona um timestamp para registro
+        formData.append('timestamp', new Date().toISOString());
 
-        fetch(scriptURL, {
+
+        fetch(SCRIPT_URL, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
+            // IMPORTANTE: Não defina o cabeçalho "Content-Type" para que o navegador use 'multipart/form-data'
+            body: formData
         })
         .then(async response => {
+            // Tenta ler a resposta como texto
             const text = await response.text();
 
             let json;
             try {
+                // Tenta analisar o JSON retornado pelo Apps Script
                 json = JSON.parse(text);
             } catch {
-                json = { status: "error", message: text };
+                // Se não for JSON, trata como erro
+                json = { status: "error", message: text || "Resposta inválida do servidor." };
             }
 
             if (json.status === "success") {
@@ -625,6 +635,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+
 
 
 
