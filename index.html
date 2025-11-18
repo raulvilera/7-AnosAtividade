@@ -488,105 +488,144 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Definir data atual como padrão
-            const today = new Date();
-            const formattedDate = today.toISOString().split('T')[0];
-            document.getElementById('activityDate').value = formattedDate;
-            
-            // Preencher número e série automaticamente ao selecionar nome
-            document.getElementById('studentName').addEventListener('change', function() {
-                const selectedOption = this.options[this.selectedIndex];
-                document.getElementById('studentNumber').value = selectedOption.getAttribute('data-number') || '';
-                document.getElementById('studentClass').value = selectedOption.getAttribute('data-class') || '';
+document.addEventListener('DOMContentLoaded', function() {
+
+    /* =====================================================
+       🟦 1) DATA ATUAL PADRÃO
+    ===================================================== */
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    document.getElementById('activityDate').value = formattedDate;
+
+
+    /* =====================================================
+       🟦 2) PREENCHER Nº E TURMA AO SELECIONAR O ALUNO
+    ===================================================== */
+    document.getElementById('studentName').addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        document.getElementById('studentNumber').value = selectedOption.getAttribute('data-number') || '';
+        document.getElementById('studentClass').value = selectedOption.getAttribute('data-class') || '';
+    });
+
+
+    /* =====================================================
+       🟦 3) SELEÇÃO DAS QUESTÕES
+    ===================================================== */
+    document.querySelectorAll('.option').forEach(option => {
+        option.addEventListener('click', function() {
+
+            // desmarca os outros itens da mesma questão
+            const parentQuestion = this.closest('.question');
+            parentQuestion.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
             });
-            
-            // Selecionar opções nas questões
-            document.querySelectorAll('.option').forEach(option => {
-                option.addEventListener('click', function() {
-                    // Remover seleção de outras opções na mesma questão
-                    const parentQuestion = this.closest('.question');
-                    parentQuestion.querySelectorAll('.option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    // Selecionar esta opção
-                    this.classList.add('selected');
-                });
-            });
-            
-            // Botão limpar
-            document.getElementById('clearBtn').addEventListener('click', function() {
-                document.querySelectorAll('.option').forEach(option => {
-                    option.classList.remove('selected');
-                });
-            });
-            
-            // Botão enviar
-            document.getElementById('submitBtn').addEventListener('click', function() {
-                const studentName = document.getElementById('studentName').value;
-                const studentNumber = document.getElementById('studentNumber').value;
-                const studentClass = document.getElementById('studentClass').value;
-                const activityDate = document.getElementById('activityDate').value;
-                
-                // Validar se o aluno selecionou seu nome
-                if (!studentName) {
-                    alert('Por favor, selecione seu nome na lista.');
-                    return;
-                }
-                
-                // Coletar respostas
-                const answers = [];
-                document.querySelectorAll('.question').forEach((question, index) => {
-                    const selectedOption = question.querySelector('.option.selected');
-                    answers.push(selectedOption ? selectedOption.getAttribute('data-value') : '');
-                });
-                
-                // Verificar se todas as questões foram respondidas
-                if (answers.includes('')) {
-                    alert('Por favor, responda todas as questões antes de enviar.');
-                    return;
-                }
-                
-                // Calcular pontuação (cada questão vale 1 ponto)
-                const score = answers.filter(answer => answer === 'B').length;
-                
-                // Enviar para o Google Sheets
-                submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score);
-            });
-            
-            function submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score) {
-                // URL do Google Apps Script (substitua pelo URL real do seu script)
-                const scriptURL = 'https://script.google.com/macros/s/AKfycbzq9ql28sUID6hsgn5xokU8RY73mYazB2x8vYPlZUGxQxvStJhFrSKmNrwCqfUs0mA/exec';
-                
-                const formData = new FormData();
-                formData.append('studentName', studentName);
-                formData.append('studentNumber', studentNumber);
-                formData.append('studentClass', studentClass);
-                formData.append('activityDate', activityDate);
-                formData.append('answers', JSON.stringify(answers));
-                formData.append('score', score);
-                
-                fetch(scriptURL, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Respostas enviadas com sucesso! Sua pontuação: ' + score + '/10');
-                    } else {
-                        alert('Erro ao enviar respostas. Tente novamente.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro:', error);
-                    alert('Erro ao enviar respostas. Tente novamente.');
-                });
-            }
+
+            // marca esta opção
+            this.classList.add('selected');
         });
-    </script>
+    });
+
+
+    /* =====================================================
+       🟦 4) BOTÃO LIMPAR
+    ===================================================== */
+    document.getElementById('clearBtn').addEventListener('click', function() {
+        document.querySelectorAll('.option').forEach(option => {
+            option.classList.remove('selected');
+        });
+    });
+
+
+    /* =====================================================
+       🟦 5) BOTÃO ENVIAR
+    ===================================================== */
+    document.getElementById('submitBtn').addEventListener('click', function() {
+
+        const studentName = document.getElementById('studentName').value;
+        const studentNumber = document.getElementById('studentNumber').value;
+        const studentClass = document.getElementById('studentClass').value;
+        const activityDate = document.getElementById('activityDate').value;
+
+        // validação do aluno
+        if (!studentName) {
+            alert('Por favor, selecione seu nome na lista.');
+            return;
+        }
+
+        // coleta das respostas
+        const answers = [];
+        document.querySelectorAll('.question').forEach((question) => {
+            const selectedOption = question.querySelector('.option.selected');
+            answers.push(selectedOption ? selectedOption.getAttribute('data-value') : '');
+        });
+
+        // verifica se todas foram respondidas
+        if (answers.includes('')) {
+            alert('Por favor, responda todas as questões antes de enviar.');
+            return;
+        }
+
+        // calcula nota (resposta certa = B)
+        const score = answers.filter(a => a === 'B').length;
+
+        // envia ao Apps Script
+        submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score);
+    });
+
+
+    /* =====================================================
+       🟦 6) ENVIO PARA O GOOGLE SHEETS EM JSON
+    ===================================================== */
+    function submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score) {
+
+        const scriptURL = "https://script.google.com/macros/s/AKfycbzq9ql28sUID6hsgn5xokU8RY73mYazB2x8vYPlZUGxQxvStJhFrSKmNrwCqfUs0mA/exec";
+
+        const payload = {
+            studentName: studentName,
+            studentNumber: studentNumber,
+            studentClass: studentClass,
+            activityDate: activityDate,
+            answers: answers,
+            score: score,
+            timestamp: new Date().toISOString()
+        };
+
+        fetch(scriptURL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(async response => {
+            const text = await response.text();
+
+            let json;
+            try {
+                json = JSON.parse(text);
+            } catch {
+                json = { status: "error", message: text };
+            }
+
+            if (json.status === "success") {
+                alert('Respostas enviadas com sucesso! Sua pontuação: ' + score + '/10');
+            } else {
+                alert("Erro ao enviar: " + json.message);
+                console.error("Erro:", json);
+            }
+        })
+        .catch(error => {
+            console.error("Erro no envio:", error);
+            alert("Erro ao enviar respostas. Verifique a conexão.");
+        });
+    }
+
+});
+</script>
+
 </body>
 </html>
+
 
 
 
