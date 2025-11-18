@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
         
         body {
@@ -22,22 +22,25 @@
             margin: 0 auto;
             background-color: white;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
             overflow: hidden;
             padding: 2mm; /* 2mm entre a borda branca e o fundo verde */
         }
         
         .header {
-            background-color: #f8f9fa;
+            background: linear-gradient(to right, #a8e6cf, #1a1a1a); /* Gradiente horizontal verde claro para preto */
             padding: 20px;
             border-bottom: 2px solid #e0e0e0;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
         
         .school-name {
             text-align: center;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 15px;
+            color: white;
         }
         
         .student-info {
@@ -57,12 +60,20 @@
             margin-right: 5px;
             font-weight: bold;
             white-space: nowrap;
+            color: white;
         }
         
         .info-field input, .info-field select {
-            padding: 5px;
+            padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .info-field input:focus, .info-field select:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
         
         .name-field {
@@ -77,8 +88,10 @@
         .activity-title {
             text-align: center;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 22px;
             margin: 20px 0;
+            color: #1a1a1a;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
         }
         
         .question {
@@ -86,14 +99,20 @@
             margin: 3mm 0; /* 3mm entre cada questão */
             padding: 15px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
             position: relative;
+            transition: transform 0.3s ease;
+        }
+        
+        .question:hover {
+            transform: translateY(-2px);
         }
         
         .question-title {
             font-weight: bold;
             margin-bottom: 10px;
             font-size: 16px;
+            color: #1a1a1a;
         }
         
         .question-image {
@@ -101,7 +120,7 @@
             height: auto;
             margin: 10px 0;
             border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
         }
         
         .options {
@@ -110,25 +129,29 @@
         
         .option {
             margin-bottom: 10px;
-            padding: 10px;
+            padding: 12px;
             background-color: white;
             border-radius: 5px;
             border: 1px solid #ddd;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: bold; /* Texto em negrito */
+            position: relative;
+            overflow: hidden;
         }
         
         .option:hover {
             background-color: #f0f8ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         .option.selected {
             background-color: #003366; /* Azul escuro */
             color: white;
             border-color: #002244;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3); /* Efeito de afundar */
-            transform: translateY(1px); /* Pequeno movimento para baixo */
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3); /* Efeito de afundar */
+            transform: translateY(2px); /* Pequeno movimento para baixo */
         }
         
         .option-image {
@@ -147,12 +170,20 @@
         }
         
         button {
-            padding: 10px 20px;
+            padding: 12px 25px;
             border: none;
             border-radius: 5px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
         
         #submitBtn {
@@ -175,6 +206,22 @@
         
         .spacer {
             height: 3mm; /* Espaçamento entre questões */
+        }
+        
+        /* Efeito de onda ao clicar nos botões */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
     </style>
 </head>
@@ -487,163 +534,200 @@
         </div>
     </div>
 
-   <script>
-document.addEventListener('DOMContentLoaded', function() {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // URL do seu Web App do Google Apps Script
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1yT6LNEUd1YVfU3eEOfEt453Lsj1TSBV9wpHHSsJIfB6rMULJsR8Tnpa5AxiWbGc/exec";
+            
+            /* =====================================================
+               🟦 1 ) DATA ATUAL PADRÃO
+            ===================================================== */
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById('activityDate').value = formattedDate;
 
-    // URL do seu Web App do Google Apps Script
-    // ATENÇÃO: Certifique-se de que este URL está correto e que o Apps Script foi publicado com as permissões "Qualquer pessoa".
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1yT6LNEUd1YVfU3eEOfEt453Lsj1TSBV9wpHHSsJIfB6rMULJsR8Tnpa5AxiWbGc/exec";
-    
-    /* =====================================================
-       🟦 1 ) DATA ATUAL PADRÃO
-    ===================================================== */
-    const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0];
-    document.getElementById('activityDate').value = formattedDate;
-
-
-    /* =====================================================
-       🟦 2) PREENCHER Nº E TURMA AO SELECIONAR O ALUNO
-    ===================================================== */
-    document.getElementById('studentName').addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        document.getElementById('studentNumber').value = selectedOption.getAttribute('data-number') || '';
-        document.getElementById('studentClass').value = selectedOption.getAttribute('data-class') || '';
-    });
-
-
-    /* =====================================================
-       🟦 3) SELEÇÃO DAS QUESTÕES
-    ===================================================== */
-    document.querySelectorAll('.option').forEach(option => {
-        option.addEventListener('click', function() {
-
-            // desmarca os outros itens da mesma questão
-            const parentQuestion = this.closest('.question');
-            parentQuestion.querySelectorAll('.option').forEach(opt => {
-                opt.classList.remove('selected');
+            /* =====================================================
+               🟦 2) PREENCHER Nº E TURMA AO SELECIONAR O ALUNO
+            ===================================================== */
+            document.getElementById('studentName').addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                document.getElementById('studentNumber').value = selectedOption.getAttribute('data-number') || '';
+                document.getElementById('studentClass').value = selectedOption.getAttribute('data-class') || '';
             });
 
-            // marca esta opção
-            this.classList.add('selected');
-        });
-    });
+            /* =====================================================
+               🟦 3) SELEÇÃO DAS QUESTÕES
+            ===================================================== */
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    // desmarca os outros itens da mesma questão
+                    const parentQuestion = this.closest('.question');
+                    parentQuestion.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
 
+                    // marca esta opção
+                    this.classList.add('selected');
+                    
+                    // Efeito sonoro ao clicar
+                    playClickSound();
+                });
+            });
 
-    /* =====================================================
-       🟦 4) BOTÃO LIMPAR
-    ===================================================== */
-    document.getElementById('clearBtn').addEventListener('click', function() {
-        document.querySelectorAll('.option').forEach(option => {
-            option.classList.remove('selected');
-        });
-    });
+            /* =====================================================
+               🟦 4) BOTÃO LIMPAR
+            ===================================================== */
+            document.getElementById('clearBtn').addEventListener('click', function(e) {
+                // Efeito visual de clique
+                createRipple(e);
+                playClickSound();
+                
+                document.querySelectorAll('.option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+            });
 
+            /* =====================================================
+               🟦 5) BOTÃO ENVIAR
+            ===================================================== */
+            document.getElementById('submitBtn').addEventListener('click', function(e) {
+                // Efeito visual de clique
+                createRipple(e);
+                playClickSound();
 
-    /* =====================================================
-       🟦 5) BOTÃO ENVIAR
-    ===================================================== */
-    document.getElementById('submitBtn').addEventListener('click', function() {
+                const studentName = document.getElementById('studentName').value;
+                const studentNumber = document.getElementById('studentNumber').value;
+                const studentClass = document.getElementById('studentClass').value;
+                const activityDate = document.getElementById('activityDate').value;
 
-        const studentName = document.getElementById('studentName').value;
-        const studentNumber = document.getElementById('studentNumber').value;
-        const studentClass = document.getElementById('studentClass').value;
-        const activityDate = document.getElementById('activityDate').value;
+                // validação do aluno
+                if (!studentName) {
+                    alert('Por favor, selecione seu nome na lista.');
+                    return;
+                }
 
-        // validação do aluno
-        if (!studentName) {
-            alert('Por favor, selecione seu nome na lista.');
-            return;
-        }
+                // coleta das respostas
+                const answers = [];
+                document.querySelectorAll('.question').forEach((question) => {
+                    const selectedOption = question.querySelector('.option.selected');
+                    answers.push(selectedOption ? selectedOption.getAttribute('data-value') : '');
+                });
 
-        // coleta das respostas
-        const answers = [];
-        document.querySelectorAll('.question').forEach((question) => {
-            const selectedOption = question.querySelector('.option.selected');
-            answers.push(selectedOption ? selectedOption.getAttribute('data-value') : '');
-        });
+                // verifica se todas foram respondidas
+                if (answers.includes('')) {
+                    alert('Por favor, responda todas as questões antes de enviar.');
+                    return;
+                }
 
-        // verifica se todas foram respondidas
-        if (answers.includes('')) {
-            alert('Por favor, responda todas as questões antes de enviar.');
-            return;
-        }
+                // calcula nota (resposta certa = B)
+                const score = answers.filter(a => a === 'B').length;
 
-        // calcula nota (resposta certa = B)
-        const score = answers.filter(a => a === 'B').length;
+                // envia ao Apps Script
+                submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score);
+            });
 
-        // envia ao Apps Script
-        submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score);
-    });
+            /* =====================================================
+               🟦 6) ENVIO PARA O GOOGLE SHEETS (CORREÇÃO CORS)
+            ===================================================== */
+            function submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score) {
+                // Cria um objeto FormData para enviar os dados como um formulário (evita CORS)
+                const formData = new FormData();
+                formData.append('studentName', studentName);
+                formData.append('studentNumber', studentNumber);
+                formData.append('studentClass', studentClass);
+                formData.append('activityDate', activityDate);
+                formData.append('score', score);
+                
+                // Adiciona as respostas individualmente (Q1, Q2, Q3...)
+                answers.forEach((answer, index) => {
+                    formData.append(`Q${index + 1}`, answer);
+                });
 
+                // Adiciona um timestamp para registro
+                formData.append('timestamp', new Date().toISOString());
 
-    /* =====================================================
-       🟦 6) ENVIO PARA O GOOGLE SHEETS (CORREÇÃO CORS)
-    ===================================================== */
-    function submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score) {
+                fetch(SCRIPT_URL, {
+                    method: "POST",
+                    // IMPORTANTE: Não defina o cabeçalho "Content-Type" para que o navegador use 'multipart/form-data'
+                    body: formData
+                })
+                .then(async response => {
+                    // Tenta ler a resposta como texto
+                    const text = await response.text();
 
-        // Cria um objeto FormData para enviar os dados como um formulário (evita CORS)
-        const formData = new FormData();
-        formData.append('studentName', studentName);
-        formData.append('studentNumber', studentNumber);
-        formData.append('studentClass', studentClass);
-        formData.append('activityDate', activityDate);
-        formData.append('score', score);
-        
-        // Adiciona as respostas individualmente (Q1, Q2, Q3...)
-        answers.forEach((answer, index) => {
-            formData.append(`Q${index + 1}`, answer);
-        });
+                    let json;
+                    try {
+                        // Tenta analisar o JSON retornado pelo Apps Script
+                        json = JSON.parse(text);
+                    } catch {
+                        // Se não for JSON, trata como erro
+                        json = { status: "error", message: text || "Resposta inválida do servidor." };
+                    }
 
-        // Adiciona um timestamp para registro
-        formData.append('timestamp', new Date().toISOString());
-
-
-        fetch(SCRIPT_URL, {
-            method: "POST",
-            // IMPORTANTE: Não defina o cabeçalho "Content-Type" para que o navegador use 'multipart/form-data'
-            body: formData
-        })
-        .then(async response => {
-            // Tenta ler a resposta como texto
-            const text = await response.text();
-
-            let json;
-            try {
-                // Tenta analisar o JSON retornado pelo Apps Script
-                json = JSON.parse(text);
-            } catch {
-                // Se não for JSON, trata como erro
-                json = { status: "error", message: text || "Resposta inválida do servidor." };
+                    if (json.status === "success") {
+                        alert('Respostas enviadas com sucesso! Sua pontuação: ' + score + '/10');
+                    } else {
+                        alert("Erro ao enviar: " + json.message);
+                        console.error("Erro:", json);
+                    }
+                })
+                .catch(error => {
+                    console.error("Erro no envio:", error);
+                    alert("Erro ao enviar respostas. Verifique a conexão.");
+                });
             }
 
-            if (json.status === "success") {
-                alert('Respostas enviadas com sucesso! Sua pontuação: ' + score + '/10');
-            } else {
-                alert("Erro ao enviar: " + json.message);
-                console.error("Erro:", json);
+            /* =====================================================
+               🟦 7) FUNÇÃO PARA CRIAR EFEITO DE ONDA NOS BOTÕES
+            ===================================================== */
+            function createRipple(event) {
+                const button = event.currentTarget;
+                const circle = document.createElement("span");
+                const diameter = Math.max(button.clientWidth, button.clientHeight);
+                const radius = diameter / 2;
+
+                circle.style.width = circle.style.height = `${diameter}px`;
+                circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+                circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+                circle.classList.add("ripple");
+
+                const ripple = button.getElementsByClassName("ripple")[0];
+                if (ripple) {
+                    ripple.remove();
+                }
+
+                button.appendChild(circle);
             }
-        })
-        .catch(error => {
-            console.error("Erro no envio:", error);
-            alert("Erro ao enviar respostas. Verifique a conexão.");
+
+            /* =====================================================
+               🟦 8) FUNÇÃO PARA REPRODUZIR SOM DE CLIQUE
+            ===================================================== */
+            function playClickSound() {
+                // Cria um contexto de áudio
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                
+                // Cria um oscilador para gerar o som
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                // Conecta os nós
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Configura o som (frequência, tipo de onda, etc.)
+                oscillator.type = 'sine';
+                oscillator.frequency.value = 800; // Frequência em Hz
+                gainNode.gain.value = 0.1; // Volume
+                
+                // Toca o som
+                oscillator.start();
+                
+                // Para o som após um curto período
+                setTimeout(() => {
+                    oscillator.stop();
+                }, 100);
+            }
         });
-    }
-
-});
-</script>
-
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
