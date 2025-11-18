@@ -534,13 +534,14 @@
         </div>
     </div>
 
-    <script>
+   <script>
         document.addEventListener('DOMContentLoaded', function() {
             // URL do seu Web App do Google Apps Script
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby1yT6LNEUd1YVfU3eEOfEt453Lsj1TSBV9wpHHSsJIfB6rMULJsR8Tnpa5AxiWbGc/exec";
+            // ATENÇÃO: Certifique-se de que este URL está correto e que o Apps Script foi publicado com as permissões "Qualquer pessoa".
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbypSZyTimiMGvf4E8IXRvsjTM_DGrW_7njk8kjzV0wK2V4Pdr3AGTnX9k1MdkJ_Mmo/exec";
             
             /* =====================================================
-               🟦 1 ) DATA ATUAL PADRÃO
+               🟦 1  ) DATA ATUAL PADRÃO
             ===================================================== */
             const today = new Date();
             const formattedDate = today.toISOString().split('T')[0];
@@ -569,8 +570,10 @@
                     // marca esta opção
                     this.classList.add('selected');
                     
-                    // Efeito sonoro ao clicar
-                    playClickSound();
+                    // Efeito sonoro ao clicar (se a função playClickSound estiver definida no seu CSS/HTML)
+                    if (typeof playClickSound === 'function') {
+                        playClickSound();
+                    }
                 });
             });
 
@@ -578,9 +581,13 @@
                🟦 4) BOTÃO LIMPAR
             ===================================================== */
             document.getElementById('clearBtn').addEventListener('click', function(e) {
-                // Efeito visual de clique
-                createRipple(e);
-                playClickSound();
+                // Efeito visual de clique (se a função createRipple estiver definida no seu CSS/HTML)
+                if (typeof createRipple === 'function') {
+                    createRipple(e);
+                }
+                if (typeof playClickSound === 'function') {
+                    playClickSound();
+                }
                 
                 document.querySelectorAll('.option').forEach(option => {
                     option.classList.remove('selected');
@@ -588,20 +595,29 @@
             });
 
             /* =====================================================
-               🟦 5) BOTÃO ENVIAR
+               🟦 5) BOTÃO ENVIAR (CORRIGIDO)
             ===================================================== */
             document.getElementById('submitBtn').addEventListener('click', function(e) {
-                // Efeito visual de clique
-                createRipple(e);
-                playClickSound();
+                // Efeito visual de clique (se a função createRipple estiver definida no seu CSS/HTML)
+                if (typeof createRipple === 'function') {
+                    createRipple(e);
+                }
+                if (typeof playClickSound === 'function') {
+                    playClickSound();
+                }
 
-                const studentName = document.getElementById('studentName').value;
+                const studentSelect = document.getElementById('studentName');
+                const selectedOption = studentSelect.options[studentSelect.selectedIndex];
+                
+                // CORREÇÃO: Pega o texto visível (nome) em vez do valor (número)
+                const studentName = selectedOption.text.trim() === 'Selecione seu nome' ? '' : selectedOption.text.trim();
+                
                 const studentNumber = document.getElementById('studentNumber').value;
                 const studentClass = document.getElementById('studentClass').value;
                 const activityDate = document.getElementById('activityDate').value;
 
                 // validação do aluno
-                if (!studentName) {
+                if (studentName === '' || studentName === 'Selecione seu nome') {
                     alert('Por favor, selecione seu nome na lista.');
                     return;
                 }
@@ -729,5 +745,7 @@
             }
         });
     </script>
+
 </body>
 </html>
+
