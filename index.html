@@ -13,7 +13,7 @@
         }
         
         body {
-            background-color: #e0f2e9; /* Verde claro como fundo geral */
+            background-color: #e0f2e9;
             padding: 20px;
         }
         
@@ -24,11 +24,11 @@
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
             overflow: hidden;
-            padding: 2mm; /* 2mm entre a borda branca e o fundo verde */
+            padding: 2mm;
         }
         
         .header {
-            background: linear-gradient(to right, #a8e6cf, #1a1a1a); /* Gradiente horizontal verde claro para preto */
+            background: linear-gradient(to right, #a8e6cf, #1a1a1a);
             padding: 20px;
             border-bottom: 2px solid #e0e0e0;
             color: white;
@@ -96,7 +96,7 @@
         
         .question {
             background-color: #e6f7ff;
-            margin: 3mm 0; /* 3mm entre cada questão */
+            margin: 3mm 0;
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
@@ -135,7 +135,7 @@
             border: 1px solid #ddd;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-weight: bold; /* Texto em negrito */
+            font-weight: bold;
             position: relative;
             overflow: hidden;
         }
@@ -147,11 +147,11 @@
         }
         
         .option.selected {
-            background-color: #003366; /* Azul escuro */
+            background-color: #003366;
             color: white;
             border-color: #002244;
-            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3); /* Efeito de afundar */
-            transform: translateY(2px); /* Pequeno movimento para baixo */
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
+            transform: translateY(2px);
         }
         
         .option-image {
@@ -205,10 +205,9 @@
         }
         
         .spacer {
-            height: 3mm; /* Espaçamento entre questões */
+            height: 3mm;
         }
         
-        /* Efeito de onda ao clicar nos botões */
         .ripple {
             position: absolute;
             border-radius: 50%;
@@ -222,6 +221,10 @@
                 transform: scale(4);
                 opacity: 0;
             }
+        }
+        
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -322,215 +325,10 @@
         
         <div class="activity-title">ATIVIDADE DE CIÊNCIAS (4º BIMESTRE)</div>
         
-        <div class="question">
-            <div class="question-title">1. Durante a pandemia de COVID-19, observamos diferentes fases de disseminação do vírus. Analise o gráfico abaixo que representa a evolução de uma pandemia:</div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigCBSfGSmbRkKgK_lleY4DVc8Hcy_fke_L8W7_oXkc97eAnke6yGg7cGw61ZqpY3-b7JbbWYmup_Y4mPgv1WeIitYOblL_VvXYps6xCbrugFC2XJm0y5grS0zys3-MvRENnhB3w9Pqh9_Q1Wv88qpJyoKD2A-KF9gPY5RDMMxsDOxUTPtvhELbJz0Dlxzm/s720/Capturar.JPG" alt="Gráfico de simulação de pandemia" class="question-image">
-            <div class="options">
-                <div class="option" data-value="A">
-                    A) O gráfico mostra que o número de infectados permaneceu constante durante toda a pandemia, indicando medidas de controle eficazes desde o início.
-                </div>
-                <div class="option" data-value="B">
-                    B) Observa-se um pico de infectados seguido por uma diminuição gradual, sugerindo que medidas de contenção foram implementadas com sucesso após o pico inicial.
-                </div>
-                <div class="option" data-value="C">
-                    C) O número de mortos é sempre superior ao número de infectados, o que indica uma taxa de letalidade extremamente alta para essa doença.
-                </div>
-                <div class="option" data-value="D">
-                    D) A linha dos recuperados mostra que todas as pessoas infectadas se recuperaram rapidamente, sem necessidade de intervenção médica especializada.
-                </div>
-            </div>
+        <!-- Questões com respostas embaralhadas -->
+        <div id="questions-container">
+            <!-- As questões serão inseridas aqui dinamicamente -->
         </div>
-        
-        <div class="spacer"></div>
-        
-        <div class="question">
-            <div class="question-title">2. As bactérias podem desenvolver resistência aos antibióticos através de diferentes mecanismos. <br>Observe a imagem que representa o processo de seleção de bactérias resistentes:</div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiBHTNgvu4FJCvK9U_9q4GXxh48fwm3vRjc7MwJnc4PW9VdB8fMucCXX28JlrTu7ELpAvNh-Rj8FnD9X_ZfI9tamkdU-HjoGNbMHyWv1kNh9SumEX_668r7Ts1emdJ_aEf7FRCBpPxqncRNWIY9oNI020pMSB3PJKtkdlPL33O3Bm1NliRhgn71eqQON-cr/s550/images%20%281%29.jpeg" class="question-image">
-            <div class="options">
-                <div class="option" data-value="A">
-                    A) A resistência bacteriana ocorre apenas quando os antibióticos são usados em doses muito altas, nunca em tratamentos com doses normais.
-                </div>
-                <div class="option" data-value="B">
-                    B) As bactérias desenvolvem resistência através de mutações genéticas que são selecionadas pelo uso inadequado de antibióticos, permitindo que apenas as resistentes sobrevivem e se multipliquem.
-                </div>
-                <div class="option" data-value="C">
-                    C) A imagem mostra que todas as bactérias são igualmente sensíveis aos antibióticos, não havendo variação na resistência entre diferentes linhagens.
-                </div>
-                <div class="option" data-value="D">
-                    D) O desenvolvimento de resistência ocorre apenas em ambientes hospitalares, nunca em comunidades ou no meio ambiente.
-                </div>
-            </div>
-        </div>
-        
-        <div class="spacer"></div>
-        
-        <div class="question">
-            <div class="question-title">3. O sistema imunológico humano possui diferentes linhas de defesa contra patógenos. Analise a imagem que representa a fagocitose por um glóbulo branco:</div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_DjZ4z8ZujJuw1fRSWYWBQGWv0aBKam2cjSBnVmWzF-XuTY-V8lJtOAd9u5ZD8V809tfwS8yt5kYqnfff60lW0nSqiXV40Q8Oh-0TMhtSMpx8ZXUgziUIhOfqcY44cqlemGRyls_tHc4Mh_vmeQdKPo9_YF8p2HkJfYkrmlhi4Ltvi9Cq2HDYLBG3qqxF/s903/Capturar.JPG" class="question-image">
-            <div class="options">
-                <div class="option" data-value="A">
-                    A) A fagocitose é um processo exclusivo da imunidade adaptativa, que só ocorre após a exposição prévia a um patógeno específico.
-                </div>
-                <div class="option" data-value="B">
-                    B) Este processo faz parte da imunidade inata, onde células como macrófagos e neutrófilos englobam e destroem microrganismos invasores de forma não específica.
-                </div>
-                <div class="option" data-value="C">
-                    C) A imagem mostra a produção de anticorpos por linfócitos B, que é o principal mecanismo de defesa contra todos os tipos de infecções.
-                </div>
-                <div class="option" data-value="D">
-                    D) A fagocitose é um processo que só ocorre em resposta a infecções virais, sendo ineficaz contra bactérias e fungos.
-                </div>
-            </div>
-        </div>
-        
-        <div class="spacer"></div>
-        
-        <div class="question">
-            <div class="question-title">4. As vacinas são uma das intervenções de saúde pública mais eficazes na prevenção de doenças. Observe a imagem que representa o conceito de imunidade de rebanho:</div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0Kpc6-UcyP36heAGOFU83hzCKxy7-eL3PVvdeuzzQuLxB3VkCXcqp3b6HxOzyuZRhor6x_IBAg820z0CxI6UGkvylxho8KBk4NdiDf9Qf9FLtaR8Ntz2GXIHGYiBizMuG1NhDmC7DCaFjLvlNEu3ofeGS9hKCCI1RbOSK8e-eRVR4YpeadHHgVnq0D0jx/s476/Capturar.JPG" alt="Imunidade de rebanho" class="question-image">
-            <div class="options">
-                <div class="option" data-value="A">
-                    A) A imunidade de rebanho ocorre quando apenas 10% da população está vacinada, protegendo assim toda a comunidade contra doenças infecciosas.
-                </div>
-                <div class="option" data-value="B">
-                    B) Este conceito se baseia na ideia de que quando uma alta porcentagem da população está imune a uma doença, a transmissão é dificultada, protegendo também indivíduos não vacinados.
-                </div>
-                <div class="option" data-value="C">
-                    C) A imagem mostra que a vacinação individual é suficiente para proteger toda a população, sem necessidade de altas coberturas vacinais.
-                </div>
-                <div class="option" data-value="D">
-                    D) A imunidade de rebanho só é eficaz contra doenças bacterianas, não tendo qualquer efeito sobre doenças virais como COVID-19 ou sarampo.
-                </div>
-            </div>
-        </div>
-        
-        <div class="spacer"></div>
-        
-        <div class="question">
-            <div class="question-title">5. A tuberculose é uma doença infecciosa causada pela bactéria Mycobacterium tuberculosis. Observe a imagem que mostra os principais sintomas da tuberculose:</div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiVCM0SKp4KgfqvNMPFngwhRB3C4Bt9fojM5wqNsBW2xjZV5mDU2TZURQJKil9j2NtZAwP_aPnOi312l-wRiXVHWizzTC6eCNRiaKfFPymsycwLL-PPm6tYCRMrC8T_Sa2i1f5zNSo3zY9Aft609z0K71wmLJjONpi8yqe_J5JVG8Lwhu7RfnfobET9LsGf/s450/Capturar.JPG" alt="Sintomas da tuberculose" class="question-image">
-            <div class="options">
-                <div class="option" data-value="A">
-                    A) A tuberculose é uma doença que afeta apenas o sistema digestivo, causando principalmente diarreia e dor abdominal.
-                </div>
-                <div class="option" data-value="B">
-                    B) Os principais sintomas incluem tosse persistente por mais de três semanas, febre vespertina, sudorese noturna e emagrecimento.
-                </div>
-                <div class="option" data-value="C">
-                    C) A imagem mostra que a tuberculose é uma doença que não apresenta sintomas específicos, sendo impossível diagnosticá-la clinicamente.
-                </div>
-                <div class="option" data-value="D">
-                    D) A tuberculose é uma doença autoimune que não responde a tratamentos com antibióticos, exigindo apenas repouso para recuperação.
-                </div>
-            </div>
-        </div>
-        
-        <div class="spacer"></div>
-        
-        <div class="question">
-            <div class="question-title">6. O sistema linfático desempenha um papel fundamental na defesa do organismo. Analise a imagem que mostra a anatomia dos principais órgãos linfoides:</div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZceAqxAfcxTk0w29-YoDh7HWb-AS5rJyMBGwjhDJoniH4MKs2gbmfrIVvtpUX024Oi8MVjnNcBIlXisiOwFtdJtDkGsLFGRQA9NeRejwSBJPBOL3hkbRcu3iKY5ERYTKb82Vwtbnm5PcgHNtFPRSkpSzlHFS3RDdOsIVV8Ezfw4vWH6XXYVCXp3_RiaEB/s450/Capturar.JPG" alt="Sistema linfático" class="question-image">
-            <div class="options">
-                <div class="option" data-value="A">
-                    A) O sistema linfático é responsável apenas pelo transporte de nutrientes, não tendo qualquer relação com a defesa imunológica do organismo.
-                </div>
-                <div class="option" data-value="B">
-                    B) Órgãos como baço, timo e linfonodos produzem e abrigam células do sistema imune, sendo essenciais para a resposta imunológica contra patógenos.
-                </div>
-                <div class="option" data-value="C">
-                    C) A imagem mostra que o sistema linfático é independente do sistema circulatório, não havendo comunicação entre os dois sistemas.
-                </div>
-                <div class="option" data-value="D">
-                    D) Os órgãos linfoides são responsáveis apenas pela produção de hemácias, não participando da defesa contra infecções.
-                </div>
-            </div>
-        </div>
-        
-        <div class="spacer"></div>
-        
-        <div class="question">
-            <div class="question-title">7. As ISTs (Infecções Sexualmente Transmissíveis) como gonorreia e clamídia são causadas por bactérias. Observe a imagem que representa a bactéria Neisseria gonorrhoeae:</div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhsObpZhcrMwbluG2Mae-ledhFut5Ih3nsTuyBtz15kAhk6-_Ez28nYzovNMDdcVup2lHYAD2M2hO_ikO0_HrUScqmS9LZejJYrz_4cvC4arvSb1Jx8fzh7s2eLHHR0ltd-2Yp9W6X_hyphenhyphenOPbkDwDJZ_6qXdBWyhdwgySvqZrT2Vy6TsKo0M3G7C67MqZHA5/s450/Capturar.JPG" class="question-image">
-            <div class="options">
-                <div class="option" data-value="A">
-                    A) A gonorreia é causada por um vírus que não responde a tratamentos com antibióticos, exigindo apenas repouso para recuperação.
-                </div>
-                <div class="option" data-value="B">
-                    B) Estas ISTs são causadas por bactérias (Neisseria gonorrhoeae e Chlamydia trachomatis) que podem ser prevenidas pelo uso de preservativos e tratadas com antibióticos específicos.
-                </div>
-                <div class="option" data-value="C">
-                    C) A imagem mostra que a bactéria da gonorreia é visível a olho nu, facilitando seu diagnóstico sem necessidade de exames laboratoriais.
-                </div>
-                <div class="option" data-value="D">
-                    D) As ISTs bacterianas afetam apenas o sistema respiratório, não tendo qualquer relação com o sistema reprodutivo.
-                </div>
-            </div>
-        </div>
-        
-        <div class="spacer"></div>
-        
-        <div class="question">
-            <div class="question-title">8. O botulismo é uma doença bacteriana grave causada pela toxina da Clostridium botulinum. Observe a imagem que mostra os alimentos que podem estar contaminados:</div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiso37jNZ_QZOFi4QA7NeRZl1xIEKXsOa-9LtKG8Ye4YqN__5KMpHTn_d9svRQn6J1beStdmbOWpHuQoC_PzxqQoCxoVhcOKQpPg616mnk8LPTHZQMZ53Y7LALxRpo98Emw08BI-trb6abxkw-Fn_FSxVe3_nTF3BP1csKs1zL95RL4tr0Ubpu2tN-polIh/s450/Capturar.JPG" alt="Alimentos contaminados com Clostridium botulinum" class="question-image">
-            <div class="options">
-                <div class="option" data-value="A">
-                    A) O botulismo é uma infecção viral que se espalha pelo ar, não tendo relação com o consumo de alimentos contaminados.
-                </div>
-                <div class="option" data-value="B">
-                    B) A doença é causada pela toxina produzida pela bactéria Clostridium botulinum, que pode estar presente em alimentos enlatados ou conservas mal processadas.
-                </div>
-                <div class="option" data-value="C">
-                    C) A imagem mostra que apenas alimentos frescos e não processados podem conter a bactéria do botulismo.
-                </div>
-                <div class="option" data-value="D">
-                    D) O botulismo é uma doença contagiosa que se espalha facilmente de pessoa para pessoa, exigindo isolamento dos pacientes infectados.
-                </div>
-            </div>
-        </div>
-        
-        <div class="spacer"></div>
-        
-        <div class="question">
-            <div class="question-title">9. A resposta imune adaptativa envolve a produção de anticorpos específicos. Analise a imagem que representa a interação entre antígenos e anticorpos:</div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDJZEFbCPgUEPru2yPrD2f2YGKa8U64u-p8M0pfatc3vrGS9f4ebOyMNGfrh9ulk7wnUOF6mvyYPcNdHoNEzyG6ajU9BEq3epp9wXHdOHDTAvwS37-dKS3u4ig8Lhx38MkgncpUaPfvRC_cSMCE60CxCC3uRQGo8JgbZcF778KgDLxDozVJ8uUJ12v48wg/s858/Capturar.JPG" alt="Interação antígeno-anticorpo" class="question-image">
-            <div class="options">
-                <div class="option" data-value="A">
-                    A) Os anticorpos são produzidos por macrófagos e atuam de forma não específica contra qualquer tipo de patógeno.
-                </div>
-                <div class="option" data-value="B">
-                    B) Os linfócitos B produzem anticorpos específicos que se ligam a antígenos específicos, neutralizando os patógenos e marcando-os para destruição.
-                </div>
-                <div class="option" data-value="C">
-                    C) A imagem mostra que os anticorpos são capazes de destruir diretamente as células infectadas, sem necessidade de outras células do sistema imune.
-                </div>
-                <div class="option" data-value="D">
-                    D) Os anticorpos são moléculas inespecíficas que se ligam igualmente a todos os tipos de patógenos, não havendo especificidade na resposta imune.
-                </div>
-            </div>
-        </div>
-        
-        <div class="spacer"></div>
-        
-        <div class="question">
-            <div class="question-title">10. A produção de vacinas envolve várias etapas rigorosas de controle de qualidade. Observe a imagem que representa o processo de fabricação de vacinas:</div>
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJi2nDn5VFBbd8qZujERQUNs0WrIwQnTZ9Cl0Q3OLBi2VKd1L8IpGu_hXy8tuKjh7uLk4G1DabTkGTQ6EDFurU27Kf-5pRrc9AuW0YGy573rI6FjXqfkYp1qklR1kz9hXtRt1rIpDfQLkQVMCqso9R3EHd1Dy8yu-HALkxeaizcOWomDYOqgGyqT0uKCWN/s556/Capturar.JPG" alt="Fabricação de vacinas" class="question-image">
-            <div class="options">
-                <div class="option" data-value="A">
-                    A) As vacinas são produzidas de forma artesanal, sem necessidade de controle de qualidade ou aprovação por agências reguladoras.
-                </div>
-                <div class="option" data-value="B">
-                    B) O processo inclui desenvolvimento do IFA (Ingrediente Farmacêutico Ativo), testes clínicos, aprovação pela Anvisa e produção em larga escala, com rigoroso controle de qualidade em todas as etapas.
-                </div>
-                <div class="option" data-value="C">
-                    C) A imagem mostra que as vacinas são produzidas a partir de sangue humano, sem qualquer processamento ou purificação.
-                </div>
-                <div class="option" data-value="D">
-                    D) As vacinas não passam por testes em animais ou humanos antes de serem disponibilizadas para a população, visando acelerar o processo de produção.
-                </div>
-            </div>
-        </div>
-        
-        <div class="spacer"></div>
         
         <div class="buttons">
             <button id="submitBtn">Enviar</button>
@@ -538,21 +336,225 @@
         </div>
     </div>
 
+    <!-- Template para as questões (será clonado e preenchido dinamicamente) -->
+    <template id="question-template">
+        <div class="question" data-question-id="">
+            <div class="question-title"></div>
+            <img src="" alt="" class="question-image">
+            <div class="options">
+                <!-- As opções serão inseridas aqui dinamicamente -->
+            </div>
+        </div>
+    </template>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // URL do seu Web App do Google Apps Script
-            // ATENÇÃO: Certifique-se de que este URL está correto e que o Apps Script foi publicado com as permissões "Qualquer pessoa".
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw4cpvdslahpePqGMD3Tqc5ViC0Z3Z_xUMUYrpW9PBnl7XkD3o-v5f7gB1yIyCakqg/exec";
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxnEcf-YWM1nNBC5QM4kGi87rOJu24DkGSIfhLdNI2afZLR7AJA_SmJIR7PI1O_gNg/exec";
+            
+            // Array com as respostas corretas para cada questão (antes do embaralhamento)
+            const correctAnswers = [
+                'B', // Questão 1
+                'B', // Questão 2
+                'B', // Questão 3
+                'B', // Questão 4
+                'B', // Questão 5
+                'B', // Questão 6
+                'B', // Questão 7
+                'B', // Questão 8
+                'B', // Questão 9
+                'B'  // Questão 10
+            ];
+            
+            // Array para armazenar as respostas corretas após o embaralhamento
+            let shuffledCorrectAnswers = [];
+            
+            // Dados das questões
+            const questionsData = [
+                {
+                    id: 1,
+                    title: "1. Durante a pandemia de COVID-19, observamos diferentes fases de disseminação do vírus. Analise o gráfico abaixo que representa a evolução de uma pandemia:",
+                    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigCBSfGSmbRkKgK_lleY4DVc8Hcy_fke_L8W7_oXkc97eAnke6yGg7cGw61ZqpY3-b7JbbWYmup_Y4mPgv1WeIitYOblL_VvXYps6xCbrugFC2XJm0y5grS0zys3-MvRENnhB3w9Pqh9_Q1Wv88qpJyoKD2A-KF9gPY5RDMMxsDOxUTPtvhELbJz0Dlxzm/s720/Capturar.JPG",
+                    options: [
+                        { letter: "A", text: "O gráfico mostra que o número de infectados permaneceu constante durante toda a pandemia, indicando medidas de controle eficazes desde o início." },
+                        { letter: "B", text: "Observa-se um pico de infectados seguido por uma diminuição gradual, sugerindo que medidas de contenção foram implementadas com sucesso após o pico inicial." },
+                        { letter: "C", text: "O número de mortos é sempre superior ao número de infectados, o que indica uma taxa de letalidade extremamente alta para essa doença." },
+                        { letter: "D", text: "A linha dos recuperados mostra que todas as pessoas infectadas se recuperaram rapidamente, sem necessidade de intervenção médica especializada." }
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "2. As bactérias podem desenvolver resistência aos antibióticos através de diferentes mecanismos. <br>Observe a imagem que representa o processo de seleção de bactérias resistentes:",
+                    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiBHTNgvu4FJCvK9U_9q4GXxh48fwm3vRjc7MwJnc4PW9VdB8fMucCXX28JlrTu7ELpAvNh-Rj8FnD9X_ZfI9tamkdU-HjoGNbMHyWv1kNh9SumEX_668r7Ts1emdJ_aEf7FRCBpPxqncRNWIY9oNI020pMSB3PJKtkdlPL33O3Bm1NliRhgn71eqQON-cr/s550/images%20%281%29.jpeg",
+                    options: [
+                        { letter: "A", text: "A resistência bacteriana ocorre apenas quando os antibióticos são usados em doses muito altas, nunca em tratamentos com doses normais." },
+                        { letter: "B", text: "As bactérias desenvolvem resistência através de mutações genéticas que são selecionadas pelo uso inadequado de antibióticos, permitindo que apenas as resistentes sobrevivem e se multipliquem." },
+                        { letter: "C", text: "A imagem mostra que todas as bactérias são igualmente sensíveis aos antibióticos, não havendo variação na resistência entre diferentes linhagens." },
+                        { letter: "D", text: "O desenvolvimento de resistência ocorre apenas em ambientes hospitalares, nunca em comunidades ou no meio ambiente." }
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "3. O sistema imunológico humano possui diferentes linhas de defesa contra patógenos. Analise a imagem que representa a fagocitose por um glóbulo branco:",
+                    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_DjZ4z8ZujJuw1fRSWYWBQGWv0aBKam2cjSBnVmWzF-XuTY-V8lJtOAd9u5ZD8V809tfwS8yt5kYqnfff60lW0nSqiXV40Q8Oh-0TMhtSMpx8ZXUgziUIhOfqcY44cqlemGRyls_tHc4Mh_vmeQdKPo9_YF8p2HkJfYkrmlhi4Ltvi9Cq2HDYLBG3qqxF/s903/Capturar.JPG",
+                    options: [
+                        { letter: "A", text: "A fagocitose é um processo exclusivo da imunidade adaptativa, que só ocorre após a exposição prévia a um patógeno específico." },
+                        { letter: "B", text: "Este processo faz parte da imunidade inata, onde células como macrófagos e neutrófilos englobam e destroem microrganismos invasores de forma não específica." },
+                        { letter: "C", text: "A imagem mostra a produção de anticorpos por linfócitos B, que é o principal mecanismo de defesa contra todos os tipos de infecções." },
+                        { letter: "D", text: "A fagocitose é um processo que só ocorre em resposta a infecções virais, sendo ineficaz contra bactérias e fungos." }
+                    ]
+                },
+                {
+                    id: 4,
+                    title: "4. As vacinas são uma das intervenções de saúde pública mais eficazes na prevenção de doenças. Observe a imagem que representa o conceito de imunidade de rebanho:",
+                    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0Kpc6-UcyP36heAGOFU83hzCKxy7-eL3PVvdeuzzQuLxB3VkCXcqp3b6HxOzyuZRhor6x_IBAg820z0CxI6UGkvylxho8KBk4NdiDf9Qf9FLtaR8Ntz2GXIHGYiBizMuG1NhDmC7DCaFjLvlNEu3ofeGS9hKCCI1RbOSK8e-eRVR4YpeadHHgVnq0D0jx/s476/Capturar.JPG",
+                    options: [
+                        { letter: "A", text: "A imunidade de rebanho ocorre quando apenas 10% da população está vacinada, protegendo assim toda a comunidade contra doenças infecciosas." },
+                        { letter: "B", text: "Este conceito se baseia na ideia de que quando uma alta porcentagem da população está imune a uma doença, a transmissão é dificultada, protegendo também indivíduos não vacinados." },
+                        { letter: "C", text: "A imagem mostra que a vacinação individual é suficiente para proteger toda a população, sem necessidade de altas coberturas vacinais." },
+                        { letter: "D", text: "A imunidade de rebanho só é eficaz contra doenças bacterianas, não tendo qualquer efeito sobre doenças virais como COVID-19 ou sarampo." }
+                    ]
+                },
+                {
+                    id: 5,
+                    title: "5. A tuberculose é uma doença infecciosa causada pela bactéria Mycobacterium tuberculosis. Observe a imagem que mostra os principais sintomas da tuberculose:",
+                    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiVCM0SKp4KgfqvNMPFngwhRB3C4Bt9fojM5wqNsBW2xjZV5mDU2TZURQJKil9j2NtZAwP_aPnOi312l-wRiXVHWizzTC6eCNRiaKfFPymsycwLL-PPm6tYCRMrC8T_Sa2i1f5zNSo3zY9Aft609z0K71wmLJjONpi8yqe_J5JVG8Lwhu7RfnfobET9LsGf/s450/Capturar.JPG",
+                    options: [
+                        { letter: "A", text: "A tuberculose é uma doença que afeta apenas o sistema digestivo, causando principalmente diarreia e dor abdominal." },
+                        { letter: "B", text: "Os principais sintomas incluem tosse persistente por mais de três semanas, febre vespertina, sudorese noturna e emagrecimento." },
+                        { letter: "C", text: "A imagem mostra que a tuberculose é uma doença que não apresenta sintomas específicos, sendo impossível diagnosticá-la clinicamente." },
+                        { letter: "D", text: "A tuberculose é uma doença autoimune que não responde a tratamentos com antibióticos, exigindo apenas repouso para recuperação." }
+                    ]
+                },
+                {
+                    id: 6,
+                    title: "6. O sistema linfático desempenha um papel fundamental na defesa do organismo. Analise a imagem que mostra a anatomia dos principais órgãos linfoides:",
+                    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZceAqxAfcxTk0w29-YoDh7HWb-AS5rJyMBGwjhDJoniH4MKs2gbmfrIVvtpUX024Oi8MVjnNcBIlXisiOwFtdJtDkGsLFGRQA9NeRejwSBJPBOL3hkbRcu3iKY5ERYTKb82Vwtbnm5PcgHNtFPRSkpSzlHFS3RDdOsIVV8Ezfw4vWH6XXYVCXp3_RiaEB/s450/Capturar.JPG",
+                    options: [
+                        { letter: "A", text: "O sistema linfático é responsável apenas pelo transporte de nutrientes, não tendo qualquer relação com a defesa imunológica do organismo." },
+                        { letter: "B", text: "Órgãos como baço, timo e linfonodos produzem e abrigam células do sistema imune, sendo essenciais para a resposta imunológica contra patógenos." },
+                        { letter: "C", text: "A imagem mostra que o sistema linfático é independente do sistema circulatório, não havendo comunicação entre os dois sistemas." },
+                        { letter: "D", text: "Os órgãos linfoides são responsáveis apenas pela produção de hemácias, não participando da defesa contra infecções." }
+                    ]
+                },
+                {
+                    id: 7,
+                    title: "7. As ISTs (Infecções Sexualmente Transmissíveis) como gonorreia e clamídia são causadas por bactérias. Observe a imagem que representa a bactéria Neisseria gonorrhoeae:",
+                    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhsObpZhcrMwbluG2Mae-ledhFut5Ih3nsTuyBtz15kAhk6-_Ez28nYzovNMDdcVup2lHYAD2M2hO_ikO0_HrUScqmS9LZejJYrz_4cvC4arvSb1Jx8fzh7s2eLHHR0ltd-2Yp9W6X_hyphenhyphenOPbkDwDJZ_6qXdBWyhdwgySvqZrT2Vy6TsKo0M3G7C67MqZHA5/s450/Capturar.JPG",
+                    options: [
+                        { letter: "A", text: "A gonorreia é causada por um vírus que não responde a tratamentos com antibióticos, exigindo apenas repouso para recuperação." },
+                        { letter: "B", text: "Estas ISTs são causadas por bactérias (Neisseria gonorrhoeae e Chlamydia trachomatis) que podem ser prevenidas pelo uso de preservativos e tratadas com antibióticos específicos." },
+                        { letter: "C", text: "A imagem mostra que a bactéria da gonorreia é visível a olho nu, facilitando seu diagnóstico sem necessidade de exames laboratoriais." },
+                        { letter: "D", text: "As ISTs bacterianas afetam apenas o sistema respiratório, não tendo qualquer relação com o sistema reprodutivo." }
+                    ]
+                },
+                {
+                    id: 8,
+                    title: "8. O botulismo é uma doença bacteriana grave causada pela toxina da Clostridium botulinum. Observe a imagem que mostra os alimentos que podem estar contaminados:",
+                    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiso37jNZ_QZOFi4QA7NeRZl1xIEKXsOa-9LtKG8Ye4YqN__5KMpHTn_d9svRQn6J1beStdmbOWpHuQoC_PzxqQoCxoVhcOKQpPg616mnk8LPTHZQMZ53Y7LALxRpo98Emw08BI-trb6abxkw-Fn_FSxVe3_nTF3BP1csKs1zL95RL4tr0Ubpu2tN-polIh/s450/Capturar.JPG",
+                    options: [
+                        { letter: "A", text: "O botulismo é uma infecção viral que se espalha pelo ar, não tendo relação com o consumo de alimentos contaminados." },
+                        { letter: "B", text: "A doença é causada pela toxina produzida pela bactéria Clostridium botulinum, que pode estar presente em alimentos enlatados ou conservas mal processadas." },
+                        { letter: "C", text: "A imagem mostra que apenas alimentos frescos e não processados podem conter a bactéria do botulismo." },
+                        { letter: "D", text: "O botulismo é uma doença contagiosa que se espalha facilmente de pessoa para pessoa, exigindo isolamento dos pacientes infectados." }
+                    ]
+                },
+                {
+                    id: 9,
+                    title: "9. A resposta imune adaptativa envolve a produção de anticorpos específicos. Analise a imagem que representa a interação entre antígenos e anticorpos:",
+                    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDJZEFbCPgUEPru2yPrD2f2YGKa8U64u-p8M0pfatc3vrGS9f4ebOyMNGfrh9ulk7wnUOF6mvyYPcNdHoNEzyG6ajU9BEq3epp9wXHdOHDTAvwS37-dKS3u4ig8Lhx38MkgncpUaPfvRC_cSMCE60CxCC3uRQGo8JgbZcF778KgDLxDozVJ8uUJ12v48wg/s858/Capturar.JPG",
+                    options: [
+                        { letter: "A", text: "Os anticorpos são produzidos por macrófagos e atuam de forma não específica contra qualquer tipo de patógeno." },
+                        { letter: "B", text: "Os linfócitos B produzem anticorpos específicos que se ligam a antígenos específicos, neutralizando os patógenos e marcando-os para destruição." },
+                        { letter: "C", text: "A imagem mostra que os anticorpos são capazes de destruir diretamente as células infectadas, sem necessidade de outras células do sistema imune." },
+                        { letter: "D", text: "Os anticorpos são moléculas inespecíficas que se ligam igualmente a todos os tipos de patógenos, não havendo especificidade na resposta imune." }
+                    ]
+                },
+                {
+                    id: 10,
+                    title: "10. A produção de vacinas envolve várias etapas rigorosas de controle de qualidade. Observe a imagem que representa o processo de fabricação de vacinas:",
+                    image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJi2nDn5VFBbd8qZujERQUNs0WrIwQnTZ9Cl0Q3OLBi2VKd1L8IpGu_hXy8tuKjh7uLk4G1DabTkGTQ6EDFurU27Kf-5pRrc9AuW0YGy573rI6FjXqfkYp1qklR1kz9hXtRt1rIpDfQLkQVMCqso9R3EHd1Dy8yu-HALkxeaizcOWomDYOqgGyqT0uKCWN/s556/Capturar.JPG",
+                    options: [
+                        { letter: "A", text: "As vacinas são produzidas de forma artesanal, sem necessidade de controle de qualidade ou aprovação por agências reguladoras." },
+                        { letter: "B", text: "O processo inclui desenvolvimento do IFA (Ingrediente Farmacêutico Ativo), testes clínicos, aprovação pela Anvisa e produção em larga escala, com rigoroso controle de qualidade em todas as etapas." },
+                        { letter: "C", text: "A imagem mostra que as vacinas são produzidas a partir de sangue humano, sem qualquer processamento ou purificação." },
+                        { letter: "D", text: "As vacinas não passam por testes em animais ou humanos antes de serem disponibilizadas para a população, visando acelerar o processo de produção." }
+                    ]
+                }
+            ];
             
             /* =====================================================
-               🟦 1  ) DATA ATUAL PADRÃO
+               🟦 1) DATA ATUAL PADRÃO
             ===================================================== */
             const today = new Date();
             const formattedDate = today.toISOString().split('T')[0];
             document.getElementById('activityDate').value = formattedDate;
-
+            
             /* =====================================================
-               🟦 2) PREENCHER Nº E TURMA AO SELECIONAR O ALUNO
+               🟦 2) EMBARALHAR E EXIBIR QUESTÕES
+            ===================================================== */
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            
+            function renderQuestions() {
+                const container = document.getElementById('questions-container');
+                const template = document.getElementById('question-template');
+                
+                // Limpa o container
+                container.innerHTML = '';
+                
+                // Para cada questão
+                questionsData.forEach((questionData, index) => {
+                    // Clona o template
+                    const questionElement = template.content.cloneNode(true).querySelector('.question');
+                    questionElement.setAttribute('data-question-id', questionData.id);
+                    
+                    // Preenche o título e a imagem
+                    questionElement.querySelector('.question-title').innerHTML = questionData.title;
+                    const imgElement = questionElement.querySelector('.question-image');
+                    imgElement.src = questionData.image;
+                    imgElement.alt = `Imagem da questão ${questionData.id}`;
+                    
+                    // Embaralha as opções
+                    const shuffledOptions = shuffleArray([...questionData.options]);
+                    
+                    // Determina qual letra é a correta após o embaralhamento
+                    const originalCorrectAnswer = correctAnswers[index];
+                    const correctOption = questionData.options.find(opt => opt.letter === originalCorrectAnswer);
+                    const shuffledCorrectLetter = shuffledOptions.findIndex(opt => opt.text === correctOption.text);
+                    shuffledCorrectAnswers[index] = String.fromCharCode(65 + shuffledCorrectLetter); // Converte índice para letra (A, B, C, D)
+                    
+                    // Adiciona as opções embaralhadas
+                    const optionsContainer = questionElement.querySelector('.options');
+                    shuffledOptions.forEach((option, optionIndex) => {
+                        const optionElement = document.createElement('div');
+                        optionElement.className = 'option';
+                        optionElement.setAttribute('data-value', String.fromCharCode(65 + optionIndex)); // A, B, C, D
+                        optionElement.textContent = `${String.fromCharCode(65 + optionIndex)}) ${option.text}`;
+                        optionsContainer.appendChild(optionElement);
+                    });
+                    
+                    // Adiciona a questão ao container
+                    container.appendChild(questionElement);
+                    
+                    // Adiciona espaçamento entre questões
+                    if (index < questionsData.length - 1) {
+                        const spacer = document.createElement('div');
+                        spacer.className = 'spacer';
+                        container.appendChild(spacer);
+                    }
+                });
+            }
+            
+            // Renderiza as questões ao carregar a página
+            renderQuestions();
+            
+            /* =====================================================
+               🟦 3) PREENCHER Nº E TURMA AO SELECIONAR O ALUNO
             ===================================================== */
             document.getElementById('studentName').addEventListener('change', function() {
                 const selectedOption = this.options[this.selectedIndex];
@@ -561,31 +563,27 @@
             });
 
             /* =====================================================
-               🟦 3) SELEÇÃO DAS QUESTÕES
+               🟦 4) SELEÇÃO DAS QUESTÕES
             ===================================================== */
-            document.querySelectorAll('.option').forEach(option => {
-                option.addEventListener('click', function() {
-                    // desmarca os outros itens da mesma questão
-                    const parentQuestion = this.closest('.question');
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('option')) {
+                    const parentQuestion = e.target.closest('.question');
                     parentQuestion.querySelectorAll('.option').forEach(opt => {
                         opt.classList.remove('selected');
                     });
-
-                    // marca esta opção
-                    this.classList.add('selected');
                     
-                    // Efeito sonoro ao clicar (se a função playClickSound estiver definida no seu CSS/HTML)
+                    e.target.classList.add('selected');
+                    
                     if (typeof playClickSound === 'function') {
                         playClickSound();
                     }
-                });
+                }
             });
 
             /* =====================================================
-               🟦 4) BOTÃO LIMPAR
+               🟦 5) BOTÃO LIMPAR
             ===================================================== */
             document.getElementById('clearBtn').addEventListener('click', function(e) {
-                // Efeito visual de clique (se a função createRipple estiver definida no seu CSS/HTML)
                 if (typeof createRipple === 'function') {
                     createRipple(e);
                 }
@@ -599,10 +597,9 @@
             });
 
             /* =====================================================
-               🟦 5) BOTÃO ENVIAR (CORRIGIDO)
+               🟦 6) BOTÃO ENVIAR
             ===================================================== */
             document.getElementById('submitBtn').addEventListener('click', function(e) {
-                // Efeito visual de clique (se a função createRipple estiver definida no seu CSS/HTML)
                 if (typeof createRipple === 'function') {
                     createRipple(e);
                 }
@@ -612,45 +609,41 @@
 
                 const studentSelect = document.getElementById('studentName');
                 const selectedOption = studentSelect.options[studentSelect.selectedIndex];
-                
-                // CORREÇÃO: Pega o texto visível (nome) em vez do valor (número)
                 const studentName = selectedOption.text.trim() === 'Selecione seu nome' ? '' : selectedOption.text.trim();
-                
                 const studentNumber = document.getElementById('studentNumber').value;
                 const studentClass = document.getElementById('studentClass').value;
                 const activityDate = document.getElementById('activityDate').value;
 
-                // validação do aluno
+                // Validação do aluno
                 if (studentName === '' || studentName === 'Selecione seu nome') {
                     alert('Por favor, selecione seu nome na lista.');
                     return;
                 }
 
-                // coleta das respostas
+                // Coleta das respostas
                 const answers = [];
-                document.querySelectorAll('.question').forEach((question) => {
+                document.querySelectorAll('.question').forEach((question, index) => {
                     const selectedOption = question.querySelector('.option.selected');
                     answers.push(selectedOption ? selectedOption.getAttribute('data-value') : '');
                 });
 
-                // verifica se todas foram respondidas
+                // Verifica se todas foram respondidas
                 if (answers.includes('')) {
                     alert('Por favor, responda todas as questões antes de enviar.');
                     return;
                 }
 
-                // calcula nota (resposta certa = B)
-                const score = answers.filter(a => a === 'B').length;
+                // Calcula nota usando as respostas corretas após embaralhamento
+                const score = answers.filter((answer, index) => answer === shuffledCorrectAnswers[index]).length;
 
-                // envia ao Apps Script
+                // Envia ao Apps Script
                 submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score);
             });
 
             /* =====================================================
-               🟦 6) ENVIO PARA O GOOGLE SHEETS (CORREÇÃO CORS)
+               🟦 7) ENVIO PARA O GOOGLE SHEETS
             ===================================================== */
             function submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score) {
-                // Cria um objeto FormData para enviar os dados como um formulário (evita CORS)
                 const formData = new FormData();
                 formData.append('studentName', studentName);
                 formData.append('studentNumber', studentNumber);
@@ -668,19 +661,15 @@
 
                 fetch(SCRIPT_URL, {
                     method: "POST",
-                    // IMPORTANTE: Não defina o cabeçalho "Content-Type" para que o navegador use 'multipart/form-data'
                     body: formData
                 })
                 .then(async response => {
-                    // Tenta ler a resposta como texto
                     const text = await response.text();
 
                     let json;
                     try {
-                        // Tenta analisar o JSON retornado pelo Apps Script
                         json = JSON.parse(text);
                     } catch {
-                        // Se não for JSON, trata como erro
                         json = { status: "error", message: text || "Resposta inválida do servidor." };
                     }
 
@@ -698,7 +687,7 @@
             }
 
             /* =====================================================
-               🟦 7) FUNÇÃO PARA CRIAR EFEITO DE ONDA NOS BOTÕES
+               🟦 8) FUNÇÃO PARA CRIAR EFEITO DE ONDA NOS BOTÕES
             ===================================================== */
             function createRipple(event) {
                 const button = event.currentTarget;
@@ -720,29 +709,22 @@
             }
 
             /* =====================================================
-               🟦 8) FUNÇÃO PARA REPRODUZIR SOM DE CLIQUE
+               🟦 9) FUNÇÃO PARA REPRODUZIR SOM DE CLIQUE
             ===================================================== */
             function playClickSound() {
-                // Cria um contexto de áudio
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                
-                // Cria um oscilador para gerar o som
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
                 
-                // Conecta os nós
                 oscillator.connect(gainNode);
                 gainNode.connect(audioContext.destination);
                 
-                // Configura o som (frequência, tipo de onda, etc.)
                 oscillator.type = 'sine';
-                oscillator.frequency.value = 800; // Frequência em Hz
-                gainNode.gain.value = 0.1; // Volume
+                oscillator.frequency.value = 800;
+                gainNode.gain.value = 0.1;
                 
-                // Toca o som
                 oscillator.start();
                 
-                // Para o som após um curto período
                 setTimeout(() => {
                     oscillator.stop();
                 }, 100);
