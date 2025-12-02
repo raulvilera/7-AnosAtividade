@@ -226,6 +226,39 @@
         .hidden {
             display: none;
         }
+        
+        .song-lyric {
+            background-color: #fffacd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-style: italic;
+            color: #333;
+            border-left: 4px solid #ffd700;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .song-lyric.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .lyric-title {
+            font-weight: bold;
+            color: #996600;
+            margin-bottom: 5px;
+        }
+        
+        .selected-lyric {
+            background-color: #e6ffe6;
+            border-left: 4px solid #28a745;
+        }
     </style>
 </head>
 <body>
@@ -340,6 +373,7 @@
     <template id="question-template">
         <div class="question" data-question-id="">
             <div class="question-title"></div>
+            <div class="song-lyric"></div>
             <img src="" alt="" class="question-image">
             <div class="options">
                 <!-- As opções serão inseridas aqui dinamicamente -->
@@ -349,24 +383,30 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwn5WwhdP3tU87GdCZmeqXU3ME3JqdU3kmpc-cYaCj5u0xMHUdO-usK-lv6kagDou4/exec";
+            // 🔧 Substitua esta URL pela URL do seu Web App do Google Apps Script
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYOUR_SCRIPT_ID/exec";
             
             // Array com as respostas corretas para cada questão (antes do embaralhamento)
             const correctAnswers = [
-                'B', // Questão 1
-                'B', // Questão 2
-                'B', // Questão 3
-                'B', // Questão 4
-                'B', // Questão 5
-                'B', // Questão 6
-                'B', // Questão 7
-                'B', // Questão 8
-                'B', // Questão 9
-                'B'  // Questão 10
+                'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B'
             ];
             
             // Array para armazenar as respostas corretas após o embaralhamento
             let shuffledCorrectAnswers = [];
+            
+            // Trechos da música "Billie Jean" de Michael Jackson
+            const billieJeanLyrics = [
+                "She was more like a beauty queen from a movie scene",
+                "I said don't mind, but what do you mean I am the one",
+                "Who will dance on the floor in the round?",
+                "She said I am the one, who will dance on the floor in the round",
+                "She told me her name was Billie Jean, as she caused a scene",
+                "Then every head turned with eyes that dreamed of being the one",
+                "Who will dance on the floor in the round",
+                "People always told me be careful of what you do",
+                "And don't go around breaking young girls' hearts",
+                "And mother always told me be careful of who you love"
+            ];
             
             // Dados das questões
             const questionsData = [
@@ -419,7 +459,7 @@
                     title: "5. A tuberculose é uma doença infecciosa causada pela bactéria Mycobacterium tuberculosis. Observe a imagem que mostra os principais sintomas da tuberculose:",
                     image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiVCM0SKp4KgfqvNMPFngwhRB3C4Bt9fojM5wqNsBW2xjZV5mDU2TZURQJKil9j2NtZAwP_aPnOi312l-wRiXVHWizzTC6eCNRiaKfFPymsycwLL-PPm6tYCRMrC8T_Sa2i1f5zNSo3zY9Aft609z0K71wmLJjONpi8yqe_J5JVG8Lwhu7RfnfobET9LsGf/s450/Capturar.JPG",
                     options: [
-                        { letter: "A", text: "A tuberculose é uma doença que afeta apenas o sistema digestivo, causando principalmente diarreia e dor abdominal." },
+                        { letter: "A", text: "A tuberculose é uma doença que afeta apenas o sistema digestivo, causando principalmente diarreia e dolor abdominal." },
                         { letter: "B", text: "Os principais sintomas incluem tosse persistente por mais de três semanas, febre vespertina, sudorese noturna e emagrecimento." },
                         { letter: "C", text: "A imagem mostra que a tuberculose é uma doença que não apresenta sintomas específicos, sendo impossível diagnosticá-la clinicamente." },
                         { letter: "D", text: "A tuberculose é uma doença autoimune que não responde a tratamentos com antibióticos, exigindo apenas repouso para recuperação." }
@@ -513,11 +553,16 @@
                     const questionElement = template.content.cloneNode(true).querySelector('.question');
                     questionElement.setAttribute('data-question-id', questionData.id);
                     
-                    // Preenche o título e a imagem
+                    // Preenche o título
                     questionElement.querySelector('.question-title').innerHTML = questionData.title;
+                    
+                    // Preenche a imagem
                     const imgElement = questionElement.querySelector('.question-image');
                     imgElement.src = questionData.image;
                     imgElement.alt = `Imagem da questão ${questionData.id}`;
+                    
+                    // Adiciona o elemento para a letra da música
+                    const lyricElement = questionElement.querySelector('.song-lyric');
                     
                     // Embaralha as opções
                     const shuffledOptions = shuffleArray([...questionData.options]);
@@ -563,20 +608,42 @@
             });
 
             /* =====================================================
-               🟦 4) SELEÇÃO DAS QUESTÕES
+               🟦 4) SELEÇÃO DAS QUESTÕES - COM TRECHO DA MÚSICA
             ===================================================== */
             document.addEventListener('click', function(e) {
                 if (e.target.classList.contains('option')) {
                     const parentQuestion = e.target.closest('.question');
+                    
+                    // Remove seleção anterior
                     parentQuestion.querySelectorAll('.option').forEach(opt => {
                         opt.classList.remove('selected');
                     });
                     
+                    // Adiciona seleção atual
                     e.target.classList.add('selected');
                     
-                    if (typeof playClickSound === 'function') {
-                        playClickSound();
+                    // Obtém o índice da questão
+                    const questionIndex = Array.from(document.querySelectorAll('.question')).indexOf(parentQuestion);
+                    
+                    // Exibe o trecho da música "Billie Jean"
+                    const lyricElement = parentQuestion.querySelector('.song-lyric');
+                    if (lyricElement) {
+                        // Adiciona classe para mostrar com animação
+                        lyricElement.classList.add('show');
+                        
+                        // Se já foi selecionado, muda para a classe da letra selecionada
+                        lyricElement.classList.add('selected-lyric');
+                        
+                        // Adiciona o conteúdo
+                        const lyricContent = `
+                            <div class="lyric-title">🎵 Billie Jean - Michael Jackson</div>
+                            "${billieJeanLyrics[questionIndex]}"
+                        `;
+                        lyricElement.innerHTML = lyricContent;
                     }
+                    
+                    // Toca som de clique
+                    playClickSound();
                 }
             });
 
@@ -584,28 +651,28 @@
                🟦 5) BOTÃO LIMPAR
             ===================================================== */
             document.getElementById('clearBtn').addEventListener('click', function(e) {
-                if (typeof createRipple === 'function') {
-                    createRipple(e);
-                }
-                if (typeof playClickSound === 'function') {
-                    playClickSound();
-                }
+                createRipple(e);
+                playClickSound();
                 
+                // Limpa seleções
                 document.querySelectorAll('.option').forEach(option => {
                     option.classList.remove('selected');
+                });
+                
+                // Limpa os trechos musicais
+                document.querySelectorAll('.song-lyric').forEach(lyric => {
+                    lyric.classList.remove('show');
+                    lyric.classList.remove('selected-lyric');
+                    lyric.innerHTML = '';
                 });
             });
 
             /* =====================================================
-               🟦 6) BOTÃO ENVIAR
+               🟦 6) BOTÃO ENVIAR - ADAPTADO PARA O FORMATO CORRETO
             ===================================================== */
             document.getElementById('submitBtn').addEventListener('click', function(e) {
-                if (typeof createRipple === 'function') {
-                    createRipple(e);
-                }
-                if (typeof playClickSound === 'function') {
-                    playClickSound();
-                }
+                createRipple(e);
+                playClickSound();
 
                 const studentSelect = document.getElementById('studentName');
                 const selectedOption = studentSelect.options[studentSelect.selectedIndex];
@@ -636,53 +703,51 @@
                 // Calcula nota usando as respostas corretas após embaralhamento
                 const score = answers.filter((answer, index) => answer === shuffledCorrectAnswers[index]).length;
 
-                // Envia ao Apps Script
-                submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score);
+                // Envia ao Apps Script no formato correto
+                submitToGoogleSheets(studentName, studentClass, score, answers);
             });
 
             /* =====================================================
-               🟦 7) ENVIO PARA O GOOGLE SHEETS
+               🟦 7) ENVIO PARA O GOOGLE SHEETS - FORMATO CORRETO
             ===================================================== */
-            function submitToGoogleSheets(studentName, studentNumber, studentClass, activityDate, answers, score) {
-                const formData = new FormData();
-                formData.append('studentName', studentName);
-                formData.append('studentNumber', studentNumber);
-                formData.append('studentClass', studentClass);
-                formData.append('activityDate', activityDate);
-                formData.append('score', score);
+            function submitToGoogleSheets(studentName, studentClass, score, answers) {
+                // Prepara os dados no formato que o Apps Script espera
+                const formData = {
+                    nome: studentName,
+                    nota: score
+                };
                 
-                // Adiciona as respostas individualmente (Q1, Q2, Q3...)
-                answers.forEach((answer, index) => {
-                    formData.append(`Q${index + 1}`, answer);
-                });
-
-                // Adiciona um timestamp para registro
-                formData.append('timestamp', new Date().toISOString());
+                console.log('Enviando dados:', formData);
 
                 fetch(SCRIPT_URL, {
                     method: "POST",
-                    body: formData
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
                 })
                 .then(async response => {
                     const text = await response.text();
+                    console.log('Resposta do servidor:', text);
 
                     let json;
                     try {
                         json = JSON.parse(text);
-                    } catch {
-                        json = { status: "error", message: text || "Resposta inválida do servidor." };
+                    } catch (error) {
+                        console.error('Erro ao fazer parse do JSON:', error);
+                        json = { success: false, error: "Resposta inválida do servidor." };
                     }
 
-                    if (json.status === "success") {
-                        alert('Respostas enviadas com sucesso! Sua pontuação: ' + score + '/10');
+                    if (json.success) {
+                        alert(`✅ Notas enviadas com sucesso!\n\nAluno: ${studentName}\nNota: ${score}/10\nTurma: ${studentClass}`);
                     } else {
-                        alert("Erro ao enviar: " + json.message);
-                        console.error("Erro:", json);
+                        alert(`❌ Erro ao enviar notas:\n${json.error || 'Erro desconhecido'}`);
+                        console.error("Erro detalhado:", json);
                     }
                 })
                 .catch(error => {
                     console.error("Erro no envio:", error);
-                    alert("Erro ao enviar respostas. Verifique a conexão.");
+                    alert("❌ Erro de conexão. Verifique sua internet e tente novamente.");
                 });
             }
 
@@ -712,43 +777,33 @@
                🟦 9) FUNÇÃO PARA REPRODUZIR SOM DE CLIQUE
             ===================================================== */
             function playClickSound() {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.type = 'sine';
-                oscillator.frequency.value = 800;
-                gainNode.gain.value = 0.1;
-                
-                oscillator.start();
-                
-                setTimeout(() => {
-                    oscillator.stop();
-                }, 100);
+                // Tenta criar contexto de áudio
+                try {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) {
+                        const audioContext = new AudioContext();
+                        const oscillator = audioContext.createOscillator();
+                        const gainNode = audioContext.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioContext.destination);
+                        
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = 800;
+                        gainNode.gain.value = 0.1;
+                        
+                        oscillator.start();
+                        
+                        setTimeout(() => {
+                            oscillator.stop();
+                        }, 100);
+                    }
+                } catch (error) {
+                    // Silencia erros de áudio
+                    console.log('Áudio não disponível:', error);
+                }
             }
         });
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
