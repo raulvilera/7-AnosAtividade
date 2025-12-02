@@ -227,37 +227,30 @@
             display: none;
         }
         
-        .song-lyric {
-            background-color: #fffacd;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            font-style: italic;
-            color: #333;
-            border-left: 4px solid #ffd700;
-            font-size: 14px;
-            display: none;
+        .music-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
-        .song-lyric.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
+        .option.selected .music-indicator {
+            opacity: 1;
+            animation: pulse 1s infinite;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .lyric-title {
-            font-weight: bold;
-            color: #996600;
-            margin-bottom: 5px;
-        }
-        
-        .selected-lyric {
-            background-color: #e6ffe6;
-            border-left: 4px solid #28a745;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -373,7 +366,6 @@
     <template id="question-template">
         <div class="question" data-question-id="">
             <div class="question-title"></div>
-            <div class="song-lyric"></div>
             <img src="" alt="" class="question-image">
             <div class="options">
                 <!-- As opções serão inseridas aqui dinamicamente -->
@@ -394,18 +386,37 @@
             // Array para armazenar as respostas corretas após o embaralhamento
             let shuffledCorrectAnswers = [];
             
-            // Trechos da música "Billie Jean" de Michael Jackson
-            const billieJeanLyrics = [
-                "She was more like a beauty queen from a movie scene",
-                "I said don't mind, but what do you mean I am the one",
-                "Who will dance on the floor in the round?",
-                "She said I am the one, who will dance on the floor in the round",
-                "She told me her name was Billie Jean, as she caused a scene",
-                "Then every head turned with eyes that dreamed of being the one",
-                "Who will dance on the floor in the round",
-                "People always told me be careful of what you do",
-                "And don't go around breaking young girls' hearts",
-                "And mother always told me be careful of who you love"
+            // Melodia simplificada de "Billie Jean" para cada questão
+            const billieJeanMelodies = [
+                // Questão 1: Melodia do início da música
+                [329.63, 293.66, 261.63, 246.94, 220.00, 196.00, 174.61, 164.81],
+                
+                // Questão 2: Segunda parte
+                [329.63, 293.66, 261.63, 246.94, 220.00, 196.00, 174.61, 164.81, 146.83],
+                
+                // Questão 3: Terceira parte
+                [329.63, 293.66, 261.63, 246.94, 220.00, 196.00, 220.00, 246.94],
+                
+                // Questão 4: Quarta parte
+                [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25],
+                
+                // Questão 5: Quinta parte
+                [329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33, 659.25],
+                
+                // Questão 6: Sexta parte
+                [261.63, 293.66, 329.63, 349.23, 392.00, 329.63, 293.66, 261.63],
+                
+                // Questão 7: Sétima parte
+                [329.63, 293.66, 261.63, 220.00, 196.00, 174.61, 164.81, 146.83],
+                
+                // Questão 8: Oitava parte
+                [392.00, 349.23, 329.63, 293.66, 261.63, 246.94, 220.00, 196.00],
+                
+                // Questão 9: Nona parte
+                [261.63, 293.66, 329.63, 392.00, 440.00, 493.88, 587.33, 659.25],
+                
+                // Questão 10: Décima parte (final)
+                [329.63, 293.66, 261.63, 246.94, 220.00, 196.00, 174.61, 164.81, 146.83, 130.81]
             ];
             
             // Dados das questões
@@ -522,6 +533,9 @@
                 }
             ];
             
+            // Audio Context para síntese de áudio
+            let audioContext = null;
+            
             /* =====================================================
                🟦 1) DATA ATUAL PADRÃO
             ===================================================== */
@@ -561,9 +575,6 @@
                     imgElement.src = questionData.image;
                     imgElement.alt = `Imagem da questão ${questionData.id}`;
                     
-                    // Adiciona o elemento para a letra da música
-                    const lyricElement = questionElement.querySelector('.song-lyric');
-                    
                     // Embaralha as opções
                     const shuffledOptions = shuffleArray([...questionData.options]);
                     
@@ -579,7 +590,18 @@
                         const optionElement = document.createElement('div');
                         optionElement.className = 'option';
                         optionElement.setAttribute('data-value', String.fromCharCode(65 + optionIndex)); // A, B, C, D
-                        optionElement.textContent = `${String.fromCharCode(65 + optionIndex)}) ${option.text}`;
+                        
+                        // Adiciona indicador de música
+                        const musicIndicator = document.createElement('div');
+                        musicIndicator.className = 'music-indicator';
+                        musicIndicator.innerHTML = '♪';
+                        optionElement.appendChild(musicIndicator);
+                        
+                        // Texto da opção
+                        const optionText = document.createElement('span');
+                        optionText.textContent = `${String.fromCharCode(65 + optionIndex)}) ${option.text}`;
+                        optionElement.appendChild(optionText);
+                        
                         optionsContainer.appendChild(optionElement);
                     });
                     
@@ -608,11 +630,12 @@
             });
 
             /* =====================================================
-               🟦 4) SELEÇÃO DAS QUESTÕES - COM TRECHO DA MÚSICA
+               🟦 4) SELEÇÃO DAS QUESTÕES - COM SOM DA MÚSICA
             ===================================================== */
             document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('option')) {
-                    const parentQuestion = e.target.closest('.question');
+                const optionElement = e.target.closest('.option');
+                if (optionElement) {
+                    const parentQuestion = optionElement.closest('.question');
                     
                     // Remove seleção anterior
                     parentQuestion.querySelectorAll('.option').forEach(opt => {
@@ -620,27 +643,13 @@
                     });
                     
                     // Adiciona seleção atual
-                    e.target.classList.add('selected');
+                    optionElement.classList.add('selected');
                     
                     // Obtém o índice da questão
                     const questionIndex = Array.from(document.querySelectorAll('.question')).indexOf(parentQuestion);
                     
-                    // Exibe o trecho da música "Billie Jean"
-                    const lyricElement = parentQuestion.querySelector('.song-lyric');
-                    if (lyricElement) {
-                        // Adiciona classe para mostrar com animação
-                        lyricElement.classList.add('show');
-                        
-                        // Se já foi selecionado, muda para a classe da letra selecionada
-                        lyricElement.classList.add('selected-lyric');
-                        
-                        // Adiciona o conteúdo
-                        const lyricContent = `
-                            <div class="lyric-title">🎵 Billie Jean - Michael Jackson</div>
-                            "${billieJeanLyrics[questionIndex]}"
-                        `;
-                        lyricElement.innerHTML = lyricContent;
-                    }
+                    // Toca a melodia de "Billie Jean" correspondente à questão
+                    playBillieJeanMelody(questionIndex);
                     
                     // Toca som de clique
                     playClickSound();
@@ -648,7 +657,60 @@
             });
 
             /* =====================================================
-               🟦 5) BOTÃO LIMPAR
+               🟦 5) FUNÇÃO PARA TOCAR MELODIA DE "BILLIE JEAN"
+            ===================================================== */
+            function playBillieJeanMelody(questionIndex) {
+                try {
+                    // Inicializa o contexto de áudio se necessário
+                    if (!audioContext) {
+                        const AudioContext = window.AudioContext || window.webkitAudioContext;
+                        audioContext = new AudioContext();
+                    }
+                    
+                    // Verifica se o contexto está suspenso (necessário em alguns navegadores)
+                    if (audioContext.state === 'suspended') {
+                        audioContext.resume();
+                    }
+                    
+                    const melody = billieJeanMelodies[questionIndex % billieJeanMelodies.length];
+                    const duration = 0.15; // Duração de cada nota em segundos
+                    
+                    // Cria oscilador e nó de ganho
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    // Configura o tipo de onda (sine = suave, square = mais eletrônico)
+                    oscillator.type = 'sawtooth'; // Tipo que lembra sintetizador dos anos 80
+                    
+                    // Configura o ganho (volume)
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    
+                    // Toca a sequência de notas
+                    const startTime = audioContext.currentTime;
+                    
+                    melody.forEach((frequency, index) => {
+                        oscillator.frequency.setValueAtTime(frequency, startTime + index * duration);
+                    });
+                    
+                    // Inicia e para o oscilador
+                    oscillator.start(startTime);
+                    oscillator.stop(startTime + melody.length * duration);
+                    
+                    // Efeito de fade out
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + melody.length * duration);
+                    
+                } catch (error) {
+                    console.log('Erro ao tocar melodia:', error);
+                    // Fallback: toca um bip simples
+                    playClickSound();
+                }
+            }
+
+            /* =====================================================
+               🟦 6) BOTÃO LIMPAR
             ===================================================== */
             document.getElementById('clearBtn').addEventListener('click', function(e) {
                 createRipple(e);
@@ -658,17 +720,10 @@
                 document.querySelectorAll('.option').forEach(option => {
                     option.classList.remove('selected');
                 });
-                
-                // Limpa os trechos musicais
-                document.querySelectorAll('.song-lyric').forEach(lyric => {
-                    lyric.classList.remove('show');
-                    lyric.classList.remove('selected-lyric');
-                    lyric.innerHTML = '';
-                });
             });
 
             /* =====================================================
-               🟦 6) BOTÃO ENVIAR - ADAPTADO PARA O FORMATO CORRETO
+               🟦 7) BOTÃO ENVIAR - ADAPTADO PARA O FORMATO CORRETO
             ===================================================== */
             document.getElementById('submitBtn').addEventListener('click', function(e) {
                 createRipple(e);
@@ -708,7 +763,7 @@
             });
 
             /* =====================================================
-               🟦 7) ENVIO PARA O GOOGLE SHEETS - FORMATO CORRETO
+               🟦 8) ENVIO PARA O GOOGLE SHEETS - FORMATO CORRETO
             ===================================================== */
             function submitToGoogleSheets(studentName, studentClass, score, answers) {
                 // Prepara os dados no formato que o Apps Script espera
@@ -752,7 +807,7 @@
             }
 
             /* =====================================================
-               🟦 8) FUNÇÃO PARA CRIAR EFEITO DE ONDA NOS BOTÕES
+               🟦 9) FUNÇÃO PARA CRIAR EFEITO DE ONDA NOS BOTÕES
             ===================================================== */
             function createRipple(event) {
                 const button = event.currentTarget;
@@ -774,33 +829,29 @@
             }
 
             /* =====================================================
-               🟦 9) FUNÇÃO PARA REPRODUZIR SOM DE CLIQUE
+               🟦 10) FUNÇÃO PARA REPRODUZIR SOM DE CLIQUE
             ===================================================== */
             function playClickSound() {
-                // Tenta criar contexto de áudio
                 try {
                     const AudioContext = window.AudioContext || window.webkitAudioContext;
-                    if (AudioContext) {
-                        const audioContext = new AudioContext();
-                        const oscillator = audioContext.createOscillator();
-                        const gainNode = audioContext.createGain();
-                        
-                        oscillator.connect(gainNode);
-                        gainNode.connect(audioContext.destination);
-                        
-                        oscillator.type = 'sine';
-                        oscillator.frequency.value = 800;
-                        gainNode.gain.value = 0.1;
-                        
-                        oscillator.start();
-                        
-                        setTimeout(() => {
-                            oscillator.stop();
-                        }, 100);
-                    }
+                    const audioContext = new AudioContext();
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.type = 'sine';
+                    oscillator.frequency.value = 800;
+                    gainNode.gain.value = 0.1;
+                    
+                    oscillator.start();
+                    
+                    setTimeout(() => {
+                        oscillator.stop();
+                    }, 100);
                 } catch (error) {
                     // Silencia erros de áudio
-                    console.log('Áudio não disponível:', error);
                 }
             }
         });
